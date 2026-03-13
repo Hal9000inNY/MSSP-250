@@ -358,8 +358,8 @@ PHASE_ORDER.forEach((p,i) => PP[p] = PHASE_ORDER.length - i);
 const TASK_DEF = [
   {id:1, ph:'Strategy & Planning',task:'Internal strategy kickoff calls',owner:'Dana Jackson + CRA',so:null,eo:null,fixS:null,fixE:'2026-03-10',status:'Completed',firm:false,notes:'2/25 and 3/11 kickoff sessions'},
   {id:2, ph:'Strategy & Planning',task:'Develop process and schedule (this doc)',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-03-12',fixE:'2026-03-13',status:'Completed',firm:false,notes:''},
-  {id:3, ph:'Survey Design & Update',task:'Draft survey questions from Suparna; update questionnaire doc',owner:'CRA',so:null,eo:null,fixS:'2026-03-16',fixE:'2026-03-18',status:'Not Started',firm:false,notes:'Incorporate questions from Suparna per strategy doc'},
-  {id:4, ph:'Survey Design & Update',task:'Internal review of full revised draft survey',owner:'Dana Jackson + CRA',so:null,eo:null,fixS:'2026-03-19',fixE:'2026-03-20',status:'Not Started',firm:false,notes:''},
+  {id:3, ph:'Survey Design & Update',task:'Draft survey questions from Suparna; update questionnaire doc',owner:'CRA',so:null,eo:null,fixS:'2026-03-18',fixE:'2026-03-19',status:'Not Started',firm:false,notes:'Incorporate questions from Suparna per strategy doc'},
+  {id:4, ph:'Survey Design & Update',task:'Internal review of new questions',owner:'Dana Jackson + CRA',so:null,eo:null,fixS:'2026-03-20',fixE:'2026-03-20',status:'Not Started',firm:false,notes:''},
   {id:5, ph:'Survey Design & Update',task:'Incorporate feedback; finalize survey draft',owner:'CRA',so:null,eo:null,fixS:'2026-03-23',fixE:'2026-03-24',status:'Not Started',firm:false,notes:''},
   {id:6, ph:'Contact & Outreach Prep',task:'Compile list of prior Top 250 contacts',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-03-20',fixE:'2026-03-27',status:'Not Started',firm:false,notes:''},
   {id:7, ph:'Contact & Outreach Prep',task:'Contact vendors for MSSP nominee referrals',owner:'CRA',so:null,eo:null,fixS:'2026-03-20',fixE:'2026-05-29',status:'Not Started',firm:false,notes:''},
@@ -627,7 +627,7 @@ function renderSchedule(){
     <select class="filter-sel" onchange="filterStatus=this.value;renderView()">${statsList.map(s=>`<option value="${s}" ${filterStatus===s?'selected':''}>${s}</option>`).join('')}</select>
     <span style="font-size:11px;color:#666">${filtered.length} task${filtered.length!==1?'s':''}</span>
     <div style="margin-left:auto;display:flex;gap:6px;align-items:center">
-      <span id="sync-badge" style="font-size:11px;white-space:nowrap">${storageReady?`<span style="color:#2A6B1A">🟢 Synced</span>`:`<span style="color:#C8220C">⚠ Local only — open in Claude.ai to sync</span>`}</span>
+      <span id="sync-badge" style="font-size:11px;white-space:nowrap">${storageReady?`<span style="color:#2A6B1A">🟢 Synced</span>`:`<span style="color:#C8220C">⚠ Local only — statuses not shared</span>`}</span>
       ${changed>0?`<button class="export-btn" style="padding:4px 10px;font-size:11px" onclick="exportCSV('changed')">Changes (${changed})</button>`:''}
       <button class="export-btn" style="padding:4px 10px;font-size:11px" onclick="exportCSV('all')">Export all</button>
     </div>
@@ -1004,7 +1004,7 @@ function updateSyncBadge(){
   const el = document.getElementById('sync-badge');
   if(!el) return;
   if(!storageReady){
-    el.innerHTML = '<span style="color:#C8220C">⚠ Local only — open in Claude.ai to sync</span>';
+    el.innerHTML = '<span style="color:#C8220C">⚠ Local only — statuses not shared</span>';
     return;
   }
   if(syncPending){
