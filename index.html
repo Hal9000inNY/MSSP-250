@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MSSP Top 250 — 2026 Project Manager</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#F5F5F3;color:#1a1a1a;font-size:14px;line-height:1.5}
+  .app{min-height:100vh;display:flex;flex-direction:column}
+  .header{background:#fff;border-bottom:1px solid #E0E0DA;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:100}
+  .header-title{font-size:15px;font-weight:600}
+  .header-sub{font-size:11px;color:#666;margin-top:1px}
+  .nav{display:flex;gap:2px;background:#F0EFE8;border-radius:8px;padding:3px}
+  .nav-btn{padding:5px 12px;border:none;background:transparent;border-radius:6px;cursor:pointer;font-size:12px;font-weight:500;color:#666;transition:all .15s}
+  .nav-btn.active{background:#fff;color:#1a1a1a;border:1px solid #E0E0DA}
+  .nav-btn:hover:not(.active){color:#1a1a1a}
+  .content{flex:1;padding:16px 20px;max-width:1200px;width:100%;margin:0 auto}
+  .grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:16px}
+  .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:14px}
+  .card{background:#fff;border:1px solid #E0E0DA;border-radius:10px;padding:14px;margin-bottom:14px}
+  .card-sm{background:#F0EFE8;border-radius:8px;padding:12px}
+  .stat-label{font-size:11px;color:#666;margin-bottom:4px}
+  .stat-val{font-size:24px;font-weight:500}
+  .stat-sub{font-size:11px;color:#666;margin-top:2px}
+  .section-title{font-size:12px;font-weight:600;color:#666;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+  .filter-sel{padding:6px 10px;border:1px solid #E0E0DA;border-radius:6px;background:#fff;color:#1a1a1a;font-size:12px;outline:none}
+  .search-in{flex:1;min-width:160px;padding:6px 10px;border:1px solid #E0E0DA;border-radius:6px;background:#fff;color:#1a1a1a;font-size:12px;outline:none}
+  .table-wrap{overflow-x:auto;border:1px solid #E0E0DA;border-radius:10px;background:#fff;margin-bottom:8px}
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  th{padding:8px 10px;text-align:left;font-weight:600;color:#666;border-bottom:1px solid #E0E0DA;background:#F8F7F4;white-space:nowrap}
+  td{padding:7px 10px;border-bottom:1px solid #F0EFE8;vertical-align:middle}
+  tr:last-child td{border-bottom:none}
+  tr:hover td{background:#F8F7F4}
+  .status-sel{padding:3px 6px;border:1px solid #E0E0DA;border-radius:4px;font-size:11px;cursor:pointer;outline:none}
+  .pill{display:inline-block;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:600}
+  .cal-wrap{background:#fff;border:1px solid #E0E0DA;border-radius:10px;overflow:hidden}
+  .cal-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #E0E0DA}
+  .cal-nav-btn{padding:4px 10px;border:1px solid #E0E0DA;border-radius:5px;background:transparent;cursor:pointer;font-size:12px;color:#1a1a1a}
+  .cal-nav-btn:hover{background:#F0EFE8}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+  .cal-dow{padding:6px 4px;text-align:center;font-size:10px;font-weight:600;color:#666;border-bottom:1px solid #E0E0DA}
+  .cal-day{padding:4px;min-height:76px;border-right:1px solid #E0E0DA;border-bottom:1px solid #E0E0DA;font-size:11px}
+  .cal-day:nth-child(7n){border-right:none}
+  .cal-day-num{font-size:11px;font-weight:600;margin-bottom:3px}
+  .cal-chip{font-size:9px;padding:1px 4px;border-radius:2px;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%;color:white;opacity:.88}
+  .legend-wrap{display:flex;flex-wrap:wrap;gap:8px;padding:10px 16px;border-top:1px solid #E0E0DA;background:#F8F7F4}
+  .legend-item{display:flex;align-items:center;gap:4px;font-size:10px;color:#666}
+  .legend-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+  .upcoming-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #F0EFE8}
+  .upcoming-row:last-child{border-bottom:none}
+  .prog-pct{font-size:11px;color:#999;width:32px;text-align:right}
+  .anchor-card{background:#fff;border:1px solid #E0E0DA;border-radius:12px;padding:20px;margin-bottom:14px}
+  .anchor-title{font-size:14px;font-weight:600;margin-bottom:4px}
+  .anchor-sub{font-size:12px;color:#666;margin-bottom:14px;line-height:1.6}
+  .date-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+  .date-label{font-size:12px;font-weight:600;min-width:80px}
+  .date-input{padding:7px 10px;border:1px solid #E0E0DA;border-radius:6px;background:#fff;color:#1a1a1a;font-size:13px;outline:none;width:180px}
+  .date-input:focus{border-color:#185FA5}
+  .affected-list{margin-top:10px;font-size:11px;color:#666;padding:10px 12px;background:#F8F7F4;border-radius:6px;line-height:1.9}
+  .cascade-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:600}
+  .cascade-webinar{background:#E6F1FB;color:#0C447C}
+  .cascade-event{background:#FCEBEB;color:#501313}
+  .cascade-fixed{background:#F1EFE8;color:#5F5E5A}
+  .changed-banner{background:#E6F1FB;border:1px solid #B5D4F4;border-radius:8px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .export-btn{padding:5px 12px;border:1px solid #185FA5;border-radius:6px;background:transparent;cursor:pointer;font-size:11px;color:#185FA5;font-weight:600;display:inline-flex;align-items:center;gap:4px;transition:background .15s}
+  .export-btn:hover{background:#E6F1FB}
+  .action-btn{padding:6px 14px;border:1px solid #C8C8C0;border-radius:6px;background:transparent;cursor:pointer;font-size:12px;color:#666}
+  .action-btn:hover{background:#F0EFE8}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1F3864;color:white;padding:9px 22px;border-radius:8px;font-size:12px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s;z-index:9999;white-space:nowrap}
+  .toast.show{opacity:1}
+  .diff-row td{background:#FFF9E6 !important}
+  .diff-row td:first-child{border-left:3px solid #C8960C}
+  .reset-link{font-size:11px;color:#185FA5;cursor:pointer;text-decoration:underline;background:none;border:none;padding:0}
+  .shift-banner{background:#FFF9E6;border:1px solid #E5C76B;border-radius:8px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+  /* Notifications */
+  .notif-section{background:#fff;border:1px solid #E0E0DA;border-radius:12px;padding:20px;margin-bottom:16px}
+  .email-field{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:4px}
+  .email-input{flex:1;min-width:220px;padding:9px 12px;border:1.5px solid #E0E0DA;border-radius:7px;font-size:13px;outline:none;background:#fff;color:#1a1a1a;transition:border-color .15s}
+  .email-input:focus{border-color:#185FA5;box-shadow:0 0 0 3px rgba(24,95,165,.08)}
+  .email-input.valid{border-color:#639922}
+  .email-input.invalid{border-color:#E24B4A}
+  .primary-btn{padding:9px 18px;background:#185FA5;color:white;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+  .primary-btn:hover{background:#0F4A8A}
+  .primary-btn:disabled{background:#C0C0B8;cursor:not-allowed}
+  .toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #F0EFE8}
+  .toggle-row:last-child{border-bottom:none}
+  .toggle-label{font-size:12px;color:#1a1a1a}
+  .toggle-sub{font-size:11px;color:#888;margin-top:1px}
+  .toggle{position:relative;width:36px;height:20px;flex-shrink:0}
+  .toggle input{opacity:0;width:0;height:0}
+  .toggle-slider{position:absolute;inset:0;background:#C8C8C0;border-radius:20px;cursor:pointer;transition:background .2s}
+  .toggle-slider:before{content:'';position:absolute;width:14px;height:14px;left:3px;top:3px;background:white;border-radius:50%;transition:transform .2s}
+  input:checked + .toggle-slider{background:#185FA5}
+  input:checked + .toggle-slider:before{transform:translateX(16px)}
+  .day-chip{display:inline-flex;align-items:center;justify-content:center;width:38px;height:34px;border:1.5px solid #E0E0DA;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:#666;transition:all .15s;user-select:none}
+  .day-chip.selected{background:#185FA5;border-color:#185FA5;color:white}
+  .day-chip:hover:not(.selected){background:#F0EFE8;border-color:#C0C0B8}
+  .notif-preview-row{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid #F0EFE8}
+  .notif-preview-row:last-child{border-bottom:none}
+  .notif-date-col{min-width:90px;font-size:11px;font-weight:600;color:#1a1a1a}
+  .notif-remind-col{min-width:80px}
+  .notif-task-col{flex:1;font-size:12px}
+  .notif-owner-col{font-size:11px;color:#888;white-space:nowrap}
+  .remind-tag{display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#EEF4FF;color:#2255AA}
+  .milestone-tag{background:#FFF0D6;color:#8A4800}
+  .saved-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;background:#EAF3DE;color:#3B6D11;border-radius:20px;font-size:12px;font-weight:600}
+  .phase-check-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px;margin-top:8px}
+  .phase-check-item{display:flex;align-items:center;gap:7px;padding:5px 8px;border-radius:5px;cursor:pointer;font-size:12px;color:#1a1a1a}
+  .phase-check-item:hover{background:#F0EFE8}
+  .phase-check-item input[type=checkbox]{width:14px;height:14px;accent-color:#185FA5;cursor:pointer;flex-shrink:0}
+  .mailto-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+
+  /* ══ PIN MODAL ═══════════════════════════════════════════════════ */
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:10000;display:flex;align-items:center;justify-content:center;animation:fadeIn .15s ease}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  .modal-card{background:#fff;border-radius:16px;padding:32px;width:360px;max-width:92vw;box-shadow:0 24px 64px rgba(0,0,0,.22);animation:slideUp .18s ease}
+  @keyframes slideUp{from{transform:translateY(12px);opacity:0}to{transform:translateY(0);opacity:1}}
+  .modal-icon{width:48px;height:48px;background:#F0EFE8;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:22px}
+  .modal-title{font-size:16px;font-weight:600;text-align:center;margin-bottom:6px}
+  .modal-sub{font-size:12px;color:#666;text-align:center;line-height:1.6;margin-bottom:20px}
+  .pin-wrap{position:relative;margin-bottom:8px}
+  .pin-input{width:100%;padding:11px 14px;border:2px solid #E0E0DA;border-radius:8px;font-size:16px;letter-spacing:4px;text-align:center;outline:none;color:#1a1a1a;background:#fff;transition:border-color .15s}
+  .pin-input:focus{border-color:#185FA5;box-shadow:0 0 0 3px rgba(24,95,165,.1)}
+  .pin-input.error{border-color:#E24B4A;animation:shake .35s ease}
+  @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+  .pin-error{font-size:12px;color:#C8220C;text-align:center;min-height:18px;margin-bottom:14px;font-weight:500}
+  .modal-btns{display:flex;gap:10px}
+  .modal-confirm{flex:1;padding:10px;background:#1F3864;color:white;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:background .15s}
+  .modal-confirm:hover{background:#142a4a}
+  .modal-cancel{padding:10px 16px;border:1.5px solid #E0E0DA;border-radius:8px;font-size:13px;font-weight:500;background:#fff;color:#666;cursor:pointer;transition:background .15s}
+  .modal-cancel:hover{background:#F0EFE8}
+
+  /* ══ DATES TAB SPECIFIC ═════════════════════════════════════════ */
+  .preview-banner{background:#FFF9E6;border:1.5px solid #E5C76B;border-radius:10px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:flex-start;gap:12px}
+  .admin-banner{background:#EAF3DE;border:1.5px solid #8CC65E;border-radius:10px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .lock-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;background:#1F3864;color:white;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s;white-space:nowrap}
+  .lock-btn:hover{background:#142a4a}
+  .lock-btn.unlocked{background:#2A6B1A}
+  .lock-btn.unlocked:hover{background:#1E5012}
+  .official-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;background:#EAF3DE;color:#2A6B1A;border:1px solid #8CC65E}
+  .preview-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;background:#FFF0D6;color:#8A4800;border:1px solid #E5A83A}
+  .date-compare{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:11px;flex-wrap:wrap}
+  .save-bar{background:#F8F7F4;border:1px solid #E0E0DA;border-radius:10px;padding:16px 20px;margin-top:4px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+  /* ══ UPDATE BANNER ═══════════════════════════════════════════════ */
+  .update-banner{background:#1F3864;color:#fff;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12px}
+  .update-banner-msg{display:flex;align-items:center;gap:8px}
+  .update-banner-icon{width:20px;height:20px;background:rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  .update-dismiss{padding:5px 14px;border:1.5px solid rgba(255,255,255,.4);border-radius:6px;background:transparent;color:#fff;font-size:11px;font-weight:600;cursor:pointer;transition:background .15s;white-space:nowrap}
+  .update-dismiss:hover{background:rgba(255,255,255,.15)}
+
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.email-field{flex-direction:column;align-items:stretch}}
+
+  /* ══ HELP MODAL ═══════════════════════════════════════════════════ */
+  .help-btn{width:28px;height:28px;border-radius:50%;border:1.5px solid #C8220C;background:#fff;color:#C8220C;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;line-height:1}
+  .help-btn:hover{background:#C8220C;border-color:#C8220C;color:#fff}
+  .help-modal-card{background:#fff;border-radius:16px;padding:0;width:560px;max-width:94vw;max-height:88vh;box-shadow:0 24px 64px rgba(0,0,0,.22);animation:slideUp .18s ease;display:flex;flex-direction:column;overflow:hidden}
+  .help-modal-header{padding:20px 24px 16px;border-bottom:1px solid #E0E0DA;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+  .help-modal-body{padding:20px 24px;overflow-y:auto;flex:1}
+  .help-close{width:28px;height:28px;border-radius:50%;border:1px solid #E0E0DA;background:#F0EFE8;color:#666;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
+  .help-close:hover{background:#E0E0DA}
+  .help-section{margin-bottom:20px}
+  .help-section:last-child{margin-bottom:0}
+  .help-section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#185FA5;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .help-row{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid #F0EFE8;font-size:12px}
+  .help-row:last-child{border-bottom:none}
+  .help-key{min-width:110px;font-weight:600;color:#1a1a1a;flex-shrink:0}
+  .help-val{color:#444;line-height:1.5}
+  .help-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:600;vertical-align:middle}
+  .help-pin-box{background:#F8F7F4;border:1px solid #E0E0DA;border-radius:8px;padding:12px 14px;font-size:12px;color:#444;line-height:1.7;margin-top:6px}
+  .help-pin-box code{background:#E8E6DF;padding:2px 6px;border-radius:4px;font-family:monospace;font-size:11px;color:#1a1a1a}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+
+<!-- ══ HELP MODAL ══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="help-modal" style="display:none">
+  <div class="help-modal-card">
+    <div class="help-modal-header">
+      <div>
+        <div style="font-size:15px;font-weight:600">Quick Reference Guide</div>
+        <div style="font-size:11px;color:#666;margin-top:2px">MSSP Top 250 — 2026 Project Manager</div>
+      </div>
+      <button class="help-close" onclick="closeHelp()">✕</button>
+    </div>
+    <div class="help-modal-body">
+
+      <!-- Tabs -->
+      <div class="help-section">
+        <div class="help-section-title">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="11" rx="1.5" stroke="#185FA5" stroke-width="1.5"/><path d="M1 7h14" stroke="#185FA5" stroke-width="1.5"/><path d="M5 3V1M11 3V1" stroke="#185FA5" stroke-width="1.5" stroke-linecap="round"/></svg>
+          The five tabs
+        </div>
+        <div class="help-row"><div class="help-key">Dashboard</div><div class="help-val">Overall progress, firm milestone countdowns, and tasks due in the next 30 days. Reflects any date changes immediately — preview dates show an amber badge.</div></div>
+        <div class="help-row"><div class="help-key">Schedule</div><div class="help-val">Full list of all 46 tasks. Search, filter by phase or status, update task status inline with the dropdown, and export to CSV.</div></div>
+        <div class="help-row"><div class="help-key">Calendar</div><div class="help-val">Monthly view from March–November 2026. Navigate with Prev/Next. Task chips appear on their start dates, color-coded by phase. ★ marks firm dates; ■ marks holidays.</div></div>
+        <div class="help-row"><div class="help-key">🔔 Reminders</div><div class="help-val">Configure email reminder timing and preferences, then generate a pre-filled email via your local email client (Outlook, Gmail, etc.). Nothing is sent automatically.</div></div>
+        <div class="help-row"><div class="help-key">Dates</div><div class="help-val">Adjust the two anchor dates — Live Event and Webinar. Anyone can explore changes in preview mode. Saving requires the admin PIN. The Live Event is a 3-day event and must start on a Monday, Tuesday, or Wednesday so all days fall on workdays — the app will block any other choice.</div></div>
+      </div>
+
+      <!-- Date cascade -->
+      <div class="help-section">
+        <div class="help-section-title">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1v14M3 6l5-5 5 5" stroke="#185FA5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          How date cascading works
+        </div>
+        <div class="help-row"><div class="help-key"><span class="help-badge" style="background:#FCEBEB;color:#501313">↳ event</span></div><div class="help-val">This task's dates shift automatically when the Live Event anchor date changes. 20 tasks cascade this way.</div></div>
+        <div class="help-row"><div class="help-key"><span class="help-badge" style="background:#E6F1FB;color:#0C447C">↳ webinar</span></div><div class="help-val">This task shifts with the Webinar anchor date. 4 tasks cascade this way.</div></div>
+        <div class="help-row"><div class="help-key"><span class="help-badge" style="background:#F1EFE8;color:#5F5E5A">fixed</span></div><div class="help-val">This task has a fixed date that does not change when anchors are adjusted. 22 tasks are fixed.</div></div>
+        <div class="help-row"><div class="help-key">★ Firm dates</div><div class="help-val">Four confirmed milestones that should not move without a major decision: Survey soft launch (Apr 1), Survey close (Jul 31), Webinar (Oct 6), Live Event (Oct 27).</div></div>
+      </div>
+
+      <!-- Preview vs official -->
+      <div class="help-section">
+        <div class="help-section-title">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#185FA5" stroke-width="1.5"/><path d="M8 7v5M8 5v.5" stroke="#185FA5" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Preview vs. official dates
+        </div>
+        <div class="help-row"><div class="help-key">Preview mode</div><div class="help-val">Anyone can move the anchor dates in the Dates tab to explore how the schedule would shift. An amber <span class="help-badge" style="background:#FFF0D6;color:#8A4800;border:1px solid #E5A83A">preview</span> tag appears on affected dates across all tabs. Nothing is committed.</div></div>
+        <div class="help-row"><div class="help-key">Official dates</div><div class="help-val">The saved dates the whole team sees. Shown with a green <span class="help-badge" style="background:#EAF3DE;color:#2A6B1A;border:1px solid #8CC65E">✓ Official</span> tag. Only updated when an admin enters the PIN and clicks Save.</div></div>
+        <div class="help-row"><div class="help-key">Discard preview</div><div class="help-val">Click "Discard all" in the Dates tab, or "Discard preview" in the yellow banner, to revert to official dates without saving.</div></div>
+      </div>
+
+      <!-- Admin PIN -->
+      <div class="help-section">
+        <div class="help-section-title">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="3" y="7" width="10" height="8" rx="1.5" stroke="#185FA5" stroke-width="1.5"/><path d="M5 7V5a3 3 0 016 0v2" stroke="#185FA5" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Admin PIN
+        </div>
+        <div class="help-row"><div class="help-key">Who needs it</div><div class="help-val">Only the 1–2 people authorized to commit official date changes. Everyone else can explore freely without a PIN.</div></div>
+        <div class="help-row"><div class="help-key">How it works</div><div class="help-val">Click <strong>🔒 Save as official dates</strong> in the Dates tab. A PIN prompt appears. Once entered correctly, admin mode stays active for the rest of your browser session — you won't be asked again until you lock or close the file.</div></div>
+        <div class="help-row"><div class="help-key">Changing the PIN</div><div class="help-val">
+          Open the HTML file in Notepad (Windows) or TextEdit (Mac). Find the line near the top of the script and replace the value in quotes with your new PIN:
+          <div class="help-pin-box"><code>const ADMIN_PIN = '...';</code><br>Replace the value between the quotes, then save the file. Contact your project admin for the current PIN.</div>
+        </div></div>
+      </div>
+
+      <!-- Status colors -->
+      <div class="help-section">
+        <div class="help-section-title">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#185FA5" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#185FA5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Task statuses
+        </div>
+        <div class="help-row"><div class="help-key"><span class="help-badge" style="background:#EAF3DE;color:#3B6D11">● Completed</span></div><div class="help-val">Task is done. No longer counted in upcoming reminders.</div></div>
+        <div class="help-row"><div class="help-key"><span class="help-badge" style="background:#FAEEDA;color:#854F0B">● In Progress</span></div><div class="help-val">Currently active. Shows in Dashboard progress bars as a faded bar segment.</div></div>
+        <div class="help-row"><div class="help-key"><span class="help-badge" style="background:#F1EFE8;color:#5F5E5A">● Not Started</span></div><div class="help-val">Default state. No action yet.</div></div>
+        <div class="help-row"><div class="help-key"><span class="help-badge" style="background:#FCEBEB;color:#A32D2D">● Blocked</span></div><div class="help-val">Task is stuck. Triggers a warning in the Reminders tab digest if that alert is enabled.</div></div>
+      </div>
+
+      <!-- Version stamp -->
+      <div class="help-section">
+        <div class="help-section-title">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#185FA5" stroke-width="1.5"/><path d="M8 5v3.5l2 2" stroke="#185FA5" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Version stamp
+        </div>
+        <div class="help-row"><div class="help-key">What it shows</div><div class="help-val">The small gray date below the title bar shows when the file was last updated. If your version doesn't match what the team was told, close and reopen the file from the shared drive folder.</div></div>
+        <div class="help-row"><div class="help-key">Update banner</div><div class="help-val">When you open a version you haven't seen before, a dark blue banner appears at the top of the page. Click <strong>Got it</strong> to dismiss it — your browser will remember and won't show it again for this version.</div></div>
+        <div class="help-row"><div class="help-key">How it's updated</div><div class="help-val">Whoever manages the file updates the <code style="background:#E8E6DF;padding:1px 5px;border-radius:4px;font-family:monospace;font-size:11px">FILE_VERSION</code> line near the top of the script each time a new version is distributed.</div></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="pin-modal" style="display:none">
+  <div class="modal-card">
+    <div class="modal-icon">🔒</div>
+    <div class="modal-title">Admin required</div>
+    <div class="modal-sub">Enter the admin PIN to save these as the official project dates.</div>
+    <div class="pin-wrap">
+      <input class="pin-input" id="pin-input" type="password" maxlength="20"
+        placeholder="Enter PIN"
+        onkeydown="if(event.key==='Enter')attemptPin()"
+        oninput="document.getElementById('pin-input').classList.remove('error');document.getElementById('pin-error').textContent=''">
+    </div>
+    <div class="pin-error" id="pin-error"></div>
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="closePinModal()">Cancel</button>
+      <button class="modal-confirm" onclick="attemptPin()">Unlock &amp; Save</button>
+    </div>
+  </div>
+</div>
+
+<div id="update-banner" class="update-banner" style="display:none">
+  <div class="update-banner-msg">
+    <div class="update-banner-icon">↑</div>
+    <div><strong>Schedule updated</strong> — you're now viewing <span id="update-version-label"></span>. Please close any older copies you may have open.</div>
+  </div>
+  <button class="update-dismiss" onclick="dismissUpdateBanner()">Got it</button>
+</div>
+
+<div class="app">
+  <div class="header">
+    <div>
+      <div class="header-title">MSSP Top 250 — 2026 Project Manager</div>
+      <div class="header-sub" id="header-sub">CyberRisk Alliance · Live Event: Oct 27–29 · Webinar: Oct 6 · 46 tasks</div>
+      <div id="version-stamp" style="font-size:10px;color:#aaa;margin-top:2px"></div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <button class="help-btn" onclick="openHelp()" title="Quick reference guide">?</button>
+      <button class="action-btn" onclick="resetAll()">Reset all</button>
+      <button class="export-btn" onclick="exportCSV('all')">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1v9M5 7l3 3 3-3M2 11v2a1 1 0 001 1h10a1 1 0 001-1v-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Export CSV
+      </button>
+      <div class="nav">
+        <button class="nav-btn active" data-view="dashboard" onclick="switchView('dashboard',this)">Dashboard</button>
+        <button class="nav-btn" data-view="schedule" onclick="switchView('schedule',this)">Schedule</button>
+        <button class="nav-btn" data-view="calendar" onclick="switchView('calendar',this)">Calendar</button>
+        <button class="nav-btn" data-view="notify" onclick="switchView('notify',this)">🔔 Reminders</button>
+        <button class="nav-btn" data-view="settings" onclick="switchView('settings',this)">Dates</button>
+      </div>
+    </div>
+  </div>
+  <div class="content" id="content"></div>
+</div>
+
+<script>
+/* admin auth */
+const ADMIN_PIN = 'MSSP2026';
+
+/* ── Version stamp — update this line every time the file is replaced ── */
+const FILE_VERSION = 'Updated Mar 13, 2026';
+
+const TODAY     = new Date('2026-03-13');
+const ORIG_LIVE = '2026-10-27';
+const ORIG_WEB  = '2026-10-06';
+
+const HOLIDAYS = {
+  '2026-01-01':"New Year's Day",'2026-01-19':'MLK Jr. Day','2026-02-16':"Presidents' Day",
+  '2026-04-03':'Good Friday','2026-05-25':'Memorial Day','2026-06-19':'Juneteenth',
+  '2026-07-03':'Independence Day (obs.)','2026-09-07':'Labor Day','2026-10-12':'Columbus Day',
+  '2026-11-11':'Veterans Day','2026-11-26':'Thanksgiving','2026-11-27':'Day after Thanksgiving',
+  '2026-12-24':'Christmas Eve','2026-12-25':'Christmas Day','2026-12-31':"New Year's Eve"
+};
+const PS = {
+  'Strategy & Planning':          {bg:'#E6F1FB',text:'#0C447C',bar:'#378ADD'},
+  'Survey Design & Update':       {bg:'#EAF3DE',text:'#27500A',bar:'#639922'},
+  'Contact & Outreach Prep':      {bg:'#FAEEDA',text:'#633806',bar:'#EF9F27'},
+  'Survey Programming & Testing': {bg:'#FAECE7',text:'#712B13',bar:'#D85A30'},
+  'Survey Fielding':              {bg:'#EEEDFE',text:'#26215C',bar:'#7F77DD'},
+  'Data Processing':              {bg:'#E1F5EE',text:'#085041',bar:'#1D9E75'},
+  'Results & Reporting':          {bg:'#FFF5DC',text:'#5C3D00',bar:'#BA7517'},
+  'Webinar':                      {bg:'#E6F1FB',text:'#042C53',bar:'#185FA5'},
+  'Live Event':                   {bg:'#FCEBEB',text:'#501313',bar:'#E24B4A'},
+  'Post-Event':                   {bg:'#EAF3DE',text:'#173404',bar:'#3B6D11'},
+  'Panel/Community':              {bg:'#EEEDFE',text:'#26215C',bar:'#534AB7'}
+};
+const SS = {
+  'Completed':   {bg:'#EAF3DE',text:'#3B6D11',dot:'#639922'},
+  'In Progress': {bg:'#FAEEDA',text:'#854F0B',dot:'#EF9F27'},
+  'Not Started': {bg:'#F1EFE8',text:'#5F5E5A',dot:'#888780'},
+  'Blocked':     {bg:'#FCEBEB',text:'#A32D2D',dot:'#E24B4A'}
+};
+const PHASE_ORDER = ['Strategy & Planning','Survey Design & Update','Contact & Outreach Prep','Survey Programming & Testing','Survey Fielding','Data Processing','Results & Reporting','Webinar','Live Event','Post-Event','Panel/Community'];
+const PP = {};
+PHASE_ORDER.forEach((p,i) => PP[p] = PHASE_ORDER.length - i);
+
+const TASK_DEF = [
+  {id:1, ph:'Strategy & Planning',task:'Internal strategy kickoff calls',owner:'Dana Jackson + CRA',so:null,eo:null,fixS:null,fixE:'2026-03-10',status:'Completed',firm:false,notes:'2/25 and 3/11 kickoff sessions'},
+  {id:2, ph:'Strategy & Planning',task:'Develop process and schedule (this doc)',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-03-12',fixE:'2026-03-13',status:'Completed',firm:false,notes:''},
+  {id:3, ph:'Survey Design & Update',task:'Draft survey questions from Suparna; update questionnaire doc',owner:'CRA',so:null,eo:null,fixS:'2026-03-16',fixE:'2026-03-18',status:'Not Started',firm:false,notes:'Incorporate questions from Suparna per strategy doc'},
+  {id:4, ph:'Survey Design & Update',task:'Internal review of full revised draft survey',owner:'Dana Jackson + CRA',so:null,eo:null,fixS:'2026-03-19',fixE:'2026-03-20',status:'Not Started',firm:false,notes:''},
+  {id:5, ph:'Survey Design & Update',task:'Incorporate feedback; finalize survey draft',owner:'CRA',so:null,eo:null,fixS:'2026-03-23',fixE:'2026-03-24',status:'Not Started',firm:false,notes:''},
+  {id:6, ph:'Contact & Outreach Prep',task:'Compile list of prior Top 250 contacts',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-03-20',fixE:'2026-03-27',status:'Not Started',firm:false,notes:''},
+  {id:7, ph:'Contact & Outreach Prep',task:'Contact vendors for MSSP nominee referrals',owner:'CRA',so:null,eo:null,fixS:'2026-03-20',fixE:'2026-05-29',status:'Not Started',firm:false,notes:''},
+  {id:8, ph:'Contact & Outreach Prep',task:'Identify additional MSSP contact lists; provide to Dana for Qualtrics',owner:'CRA',so:null,eo:null,fixS:'2026-03-20',fixE:'2026-05-29',status:'Not Started',firm:false,notes:''},
+  {id:9, ph:'Contact & Outreach Prep',task:'Draft and review survey invitation/outreach emails',owner:'Dana Jackson + CRA',so:null,eo:null,fixS:'2026-03-23',fixE:'2026-03-23',status:'Not Started',firm:false,notes:''},
+  {id:10,ph:'Survey Programming & Testing',task:'Program and test survey; configure automated emails',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-03-25',fixE:'2026-03-26',status:'Not Started',firm:false,notes:''},
+  {id:11,ph:'Survey Programming & Testing',task:'Stakeholder review and approval of programmed survey and outreach',owner:'Dana Jackson + CRA',so:null,eo:null,fixS:'2026-03-27',fixE:'2026-03-30',status:'Not Started',firm:false,notes:''},
+  {id:12,ph:'Survey Programming & Testing',task:'Final edits and re-test after approval',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-03-31',fixE:'2026-03-31',status:'Not Started',firm:false,notes:''},
+  {id:13,ph:'Survey Fielding',task:'Provide public survey link to CRA with UTM setup',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-04-01',fixE:'2026-04-01',status:'Not Started',firm:false,notes:''},
+  {id:14,ph:'Survey Fielding',task:'Soft launch survey to small segment',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-04-01',fixE:'2026-04-03',status:'Not Started',firm:true,notes:'FIRM DATE'},
+  {id:15,ph:'Survey Fielding',task:'Full launch survey to remaining MSSP list',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-04-06',fixE:'2026-07-31',status:'Not Started',firm:false,notes:''},
+  {id:16,ph:'Survey Fielding',task:'Monitor response rates and data quality (ongoing)',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-04-01',fixE:'2026-07-31',status:'Not Started',firm:false,notes:''},
+  {id:17,ph:'Survey Fielding',task:'Send reminder emails to non-respondents',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-04-30',fixE:'2026-06-15',status:'Not Started',firm:false,notes:''},
+  {id:18,ph:'Survey Fielding',task:'Vendor outreach reminder for nominee referrals',owner:'CRA',so:null,eo:null,fixS:'2026-04-06',fixE:'2026-06-15',status:'Not Started',firm:false,notes:''},
+  {id:19,ph:'Survey Fielding',task:'Identify and recruit judges for essay-reviewed awards',owner:'CRA',so:null,eo:null,fixS:'2026-04-06',fixE:'2026-04-17',status:'Not Started',firm:false,notes:''},
+  {id:20,ph:'Survey Fielding',task:'Close survey / final field date',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-07-31',fixE:'2026-07-31',status:'Not Started',firm:true,notes:'FIRM DATE'},
+  {id:21,ph:'Data Processing',task:'Data quality review and cleaning (ongoing)',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-04-01',fixE:'2026-08-03',status:'Not Started',firm:false,notes:''},
+  {id:22,ph:'Data Processing',task:'Apply scoring/ranking methodology to generate Top 250',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-08-04',fixE:'2026-08-07',status:'Not Started',firm:false,notes:''},
+  {id:23,ph:'Data Processing',task:'Generate Revenue Segmentation View (weight-class sub-lists)',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-08-03',fixE:'2026-08-18',status:'Not Started',firm:false,notes:''},
+  {id:24,ph:'Data Processing',task:'Generate shortlists for all 5 new award categories',owner:'Dana Jackson + CRA',so:null,eo:null,fixS:'2026-08-19',fixE:'2026-08-28',status:'Not Started',firm:false,notes:''},
+  {id:25,ph:'Data Processing',task:'Judge review of essay responses',owner:'CRA + Judges',so:null,eo:null,fixS:'2026-08-31',fixE:'2026-09-10',status:'Not Started',firm:false,notes:'Most Innovative & Best Emerging awards'},
+  {id:26,ph:'Data Processing',task:'Finalize all award lists; internal stakeholder review',owner:'Dana Jackson + CRA',so:null,eo:null,fixS:'2026-09-11',fixE:'2026-09-21',status:'Not Started',firm:false,notes:''},
+  {id:27,ph:'Results & Reporting',task:'Develop data presentation deck (trends, insights, benchmarks)',owner:'Dana Jackson',anchor:'live',so:-35,eo:-32,fixS:null,fixE:null,status:'Not Started',firm:false,notes:'Winner rankings embargoed until live event'},
+  {id:28,ph:'Results & Reporting',task:'Review data presentation with stakeholders',owner:'Dana Jackson + CRA',anchor:'live',so:-29,eo:-22,fixS:null,fixE:null,status:'Not Started',firm:false,notes:''},
+  {id:29,ph:'Results & Reporting',task:'Develop report charts (4-8 key charts for website/content)',owner:'Dana Jackson',anchor:'live',so:-21,eo:-11,fixS:null,fixE:null,status:'Not Started',firm:false,notes:''},
+  {id:30,ph:'Results & Reporting',task:'Create MSSPAlert.com results page content and assets',owner:'Dana Jackson + CRA',anchor:'live',so:-15,eo:-4,fixS:null,fixE:null,status:'Not Started',firm:false,notes:''},
+  {id:31,ph:'Results & Reporting',task:'Develop award winner notification communications',owner:'CRA',anchor:'live',so:-15,eo:-4,fixS:null,fixE:null,status:'Not Started',firm:false,notes:''},
+  {id:32,ph:'Webinar',task:'Plan webinar agenda and secure speakers/moderator',owner:'Dana Jackson',anchor:'web',so:-22,eo:-6,fixS:null,fixE:null,status:'Not Started',firm:false,notes:''},
+  {id:33,ph:'Webinar',task:'Develop webinar presentation deck',owner:'Dana Jackson + CRA',anchor:'web',so:-8,eo:3,fixS:null,fixE:null,status:'Not Started',firm:false,notes:''},
+  {id:34,ph:'Webinar',task:'Promote webinar (email, social, MSSPAlert.com)',owner:'CRA',anchor:'web',so:-15,eo:-1,fixS:null,fixE:null,status:'Not Started',firm:false,notes:''},
+  {id:35,ph:'Webinar',task:'Host webinar',owner:'CRA',anchor:'web',so:0,eo:0,fixS:null,fixE:null,status:'Not Started',firm:true,notes:'FIRM DATE'},
+  {id:36,ph:'Live Event',task:'Develop live event program / run-of-show',owner:'CRA',anchor:'live',so:-36,eo:-18,fixS:null,fixE:null,status:'Not Started',firm:false,notes:''},
+  {id:37,ph:'Live Event',task:'Notify winners in advance of live event',owner:'CRA',anchor:'live',so:-35,eo:-12,fixS:null,fixE:null,status:'Not Started',firm:false,notes:'Initial notification to all honorees'},
+  {id:38,ph:'Live Event',task:'Second winner outreach, if necessary',owner:'CRA',anchor:'live',so:-21,eo:-18,fixS:null,fixE:null,status:'Not Started',firm:false,notes:''},
+  {id:39,ph:'Live Event',task:'Produce award materials (certificates, graphics, signage)',owner:'CRA',anchor:'live',so:-22,eo:-5,fixS:null,fixE:null,status:'Not Started',firm:false,notes:''},
+  {id:40,ph:'Live Event',task:'Prepare on-site honoree announcements and reveal sequence',owner:'CRA',anchor:'live',so:-15,eo:-5,fixS:null,fixE:null,status:'Not Started',firm:false,notes:''},
+  {id:41,ph:'Live Event',task:'MSSP Alert Live event — announce all 2026 honorees',owner:'CRA',anchor:'live',so:0,eo:2,fixS:null,fixE:null,status:'Not Started',firm:true,notes:'FIRM DATE'},
+  {id:42,ph:'Post-Event',task:'Publish full results on MSSPAlert.com',owner:'Dana Jackson + CRA',anchor:'live',so:6,eo:7,fixS:null,fixE:null,status:'Not Started',firm:false,notes:''},
+  {id:43,ph:'Post-Event',task:'Publish post-event recap and content',owner:'CRA',anchor:'live',so:6,eo:10,fixS:null,fixE:null,status:'Not Started',firm:false,notes:''},
+  {id:44,ph:'Post-Event',task:'Post-event debrief and 2026 learnings document',owner:'CRA',anchor:'live',so:13,eo:17,fixS:null,fixE:null,status:'Not Started',firm:false,notes:''},
+  {id:45,ph:'Panel/Community',task:'Define MSSP Panel/Advisory Council structure and member benefits',owner:'Dana Jackson + CRA',so:null,eo:null,fixS:'2026-04-01',fixE:'2026-04-06',status:'Not Started',firm:false,notes:''},
+  {id:46,ph:'Panel/Community',task:'Launch Panel signup (concurrent with survey launch)',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-04-02',fixE:'2026-07-31',status:'Not Started',firm:false,notes:''}
+];
+
+/* ── App State ── */
+let liveDate     = ORIG_LIVE;   // working/preview date (anyone can change)
+let liveDateError = '';          // validation error message for live date
+let webDate      = ORIG_WEB;
+let officialLive = ORIG_LIVE;   // committed official date (admin-only save)
+let officialWeb  = ORIG_WEB;
+let adminUnlocked = false;       // true once correct PIN entered this session
+let dateSavedAt   = null;        // timestamp of last admin save
+
+let statuses = {};
+// ── Shared storage state ──────────────────────────────────────────────
+const STATUS_KEY  = 'mssp250:task_statuses';
+let storageReady  = false;   // true once window.storage confirmed available
+let lastSyncTime  = null;    // Date of last successful sync
+let syncTimer     = null;    // polling interval handle
+let syncPending   = false;   // write in flight
+TASK_DEF.forEach(t => statuses[t.id] = t.status);
+let currentView = 'dashboard', filterPhase = 'All', filterStatus = 'All', searchText = '';
+let calYear = 2026, calMonth = 2;
+const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+/* ── Notification State ── */
+let notif = {
+  email:'', saved:false, remindDays:[7,3,1],
+  milestonesOnly:false, notifyOnStart:false, notifyBlocked:true,
+  enabledPhases:new Set(PHASE_ORDER)
+};
+const ALL_REMIND_OPTIONS = [14,7,5,3,2,1];
+
+/* ── Date helpers ── */
+function parseD(s){if(!s)return null;const d=new Date(s+'T00:00:00');return isNaN(d)?null:d;}
+function addDays(s,n){const d=parseD(s);if(!d)return null;d.setDate(d.getDate()+n);return d.toISOString().slice(0,10);}
+function fmtD(s){if(!s)return'—';const d=parseD(s);if(!d)return'—';return(d.getMonth()+1)+'/'+d.getDate()+'/'+String(d.getFullYear()).slice(2);}
+function fmtDFull(s){if(!s)return'';const d=parseD(s);if(!d)return s;return(d.getMonth()+1)+'/'+d.getDate()+'/'+d.getFullYear();}
+function fmtDLong(s){if(!s)return'—';const d=parseD(s);if(!d)return'—';const m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];return m[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();}
+function fmtTime(ts){if(!ts)return'';const d=new Date(ts);return d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}
+
+function getTaskDates(t){
+  if(t.anchor==='live')return{start:t.so!=null?addDays(liveDate,t.so):null,due:t.eo!=null?addDays(liveDate,t.eo):null};
+  if(t.anchor==='web') return{start:t.so!=null?addDays(webDate,t.so):null, due:t.eo!=null?addDays(webDate,t.eo):null};
+  return{start:t.fixS,due:t.fixE};
+}
+function getOrigDates(t){
+  if(t.anchor==='live')return{start:t.so!=null?addDays(ORIG_LIVE,t.so):null,due:t.eo!=null?addDays(ORIG_LIVE,t.eo):null};
+  if(t.anchor==='web') return{start:t.so!=null?addDays(ORIG_WEB,t.so):null, due:t.eo!=null?addDays(ORIG_WEB,t.eo):null};
+  return{start:t.fixS,due:t.fixE};
+}
+function networkDays(s,e){
+  if(!s||!e)return'—';const sd=parseD(s),ed=parseD(e);
+  if(!sd||!ed||ed<sd)return'—';
+  let c=0,cur=new Date(sd);
+  while(cur<=ed){const dw=cur.getDay(),ds=cur.toISOString().slice(0,10);if(dw!==0&&dw!==6&&!HOLIDAYS[ds])c++;cur.setDate(cur.getDate()+1);}
+  return c;
+}
+function daysUntil(s){const d=parseD(s);if(!d)return null;return Math.ceil((d-TODAY)/(1000*60*60*24));}
+function liveShiftDays(){return Math.round((parseD(liveDate)-parseD(officialLive))/864e5);}
+function webShiftDays() {return Math.round((parseD(webDate) -parseD(officialWeb)) /864e5);}
+function hasUnsavedChanges(){return liveDate!==officialLive||webDate!==officialWeb;}
+function isValidEmail(e){return/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);}
+
+/* ── Badges ── */
+function sBadge(st){const s=SS[st]||SS['Not Started'];return`<span class="pill" style="background:${s.bg};color:${s.text}"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${s.dot};margin-right:3px;vertical-align:middle"></span>${st}</span>`;}
+function pBadge(ph){const s=PS[ph]||{bg:'#eee',text:'#333'};return`<span class="pill" style="background:${s.bg};color:${s.text}">${ph}</span>`;}
+function anchorTag(t){
+  if(t.anchor==='live')return`<span class="cascade-badge cascade-event">↳ event</span>`;
+  if(t.anchor==='web') return`<span class="cascade-badge cascade-webinar">↳ webinar</span>`;
+  return`<span class="cascade-badge cascade-fixed">fixed</span>`;
+}
+function showToast(msg,bg){const el=document.getElementById('toast');el.textContent=msg;el.style.background=bg||'#1F3864';el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2800);}
+
+/* ── PIN Modal ── */
+function openPinModal(){
+  const m=document.getElementById('pin-modal');
+  m.style.display='flex';
+  document.getElementById('pin-input').value='';
+  document.getElementById('pin-input').classList.remove('error');
+  document.getElementById('pin-error').textContent='';
+  setTimeout(()=>document.getElementById('pin-input').focus(),100);
+}
+function closePinModal(){document.getElementById('pin-modal').style.display='none';}
+function attemptPin(){
+  const entered=document.getElementById('pin-input').value;
+  if(entered===ADMIN_PIN){
+    adminUnlocked=true;
+    closePinModal();
+    commitDates();
+  } else {
+    const inp=document.getElementById('pin-input');
+    inp.classList.add('error');
+    document.getElementById('pin-error').textContent='Incorrect PIN — please try again.';
+    inp.value='';
+    setTimeout(()=>inp.focus(),50);
+  }
+}
+function lockAdmin(){
+  adminUnlocked=false;
+  showToast('Admin session locked');
+  renderView();
+}
+
+/* ── Date save/commit ── */
+function commitDates(){
+  officialLive=liveDate;
+  officialWeb=webDate;
+  dateSavedAt=Date.now();
+  updateHeader();
+  renderView();
+  showToast('✓ Official dates saved successfully','#2A6B1A');
+}
+function requestSaveDates(){
+  if(!hasUnsavedChanges()){showToast('No changes to save — dates already match official.');return;}
+  if(adminUnlocked){commitDates();}
+  else{openPinModal();}
+}
+
+/* ── CSV ── */
+function esc(v){const s=String(v??'');return(s.includes(',')||s.includes('"')||s.includes('\n'))?'"'+s.replace(/"/g,'""')+'"':s;}
+function exportCSV(mode){
+  const rows=mode==='changed'?TASK_DEF.filter(t=>statuses[t.id]!==t.status):TASK_DEF;
+  if(!rows.length){showToast('No changes to export.');return;}
+  const hdr=['Task #','Phase','Task Description','Owner','Start Date','Due Date','Workdays','Status','Date Type','Notes'];
+  const lines=[hdr.join(',')];
+  rows.forEach(t=>{const{start,due}=getTaskDates(t);const wd=networkDays(start,due);const dtype=t.anchor==='live'?'Cascades with Live Event':t.anchor==='web'?'Cascades with Webinar':'Fixed';lines.push([t.id,t.ph,t.task,t.owner,fmtDFull(start),fmtDFull(due),typeof wd==='number'?wd:'',statuses[t.id],dtype,t.notes||''].map(esc).join(','));});
+  const blob=new Blob([lines.join('\r\n')],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;
+  a.download=mode==='changed'?'MSSP_250_Status_Changes.csv':'MSSP_250_Full_Schedule.csv';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+  showToast(`Exported ${rows.length} tasks`);
+}
+function exportReminderCSV(){
+  const sched=buildReminderSchedule();
+  if(!sched.length){showToast('No upcoming reminders to export.');return;}
+  const hdr=['Send On','Task #','Task Name','Phase','Owner','Due Date','Reminder Type','Firm Date'];
+  const lines=[hdr.join(',')];
+  sched.forEach(e=>lines.push([fmtDFull(e.sendOn),e.taskId,e.taskName,e.phase,e.owner,fmtDFull(e.dueDate),e.type,e.firm?'Yes':'No'].map(esc).join(',')));
+  const blob=new Blob([lines.join('\r\n')],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;
+  a.download='MSSP_250_Reminder_Schedule.csv';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+  showToast(`Exported ${sched.length} reminder events`);
+}
+
+function updateHeader(){
+  const ld=parseD(liveDate),wd=parseD(webDate);
+  const lStr=`Live Event: ${(ld.getMonth()+1)}/${ld.getDate()}–${ld.getDate()+2}`;
+  const wStr=`Webinar: ${(wd.getMonth()+1)}/${wd.getDate()}`;
+  const unsaved=hasUnsavedChanges();
+  const previewStr=unsaved?` · <span style="color:#C8960C">⚠ preview mode — dates not saved</span>`:'';
+  document.getElementById('header-sub').innerHTML=`CyberRisk Alliance · ${lStr} · ${wStr} · 46 tasks${previewStr}`;
+  document.getElementById('version-stamp').textContent=FILE_VERSION;
+}
+
+/* ── Reminder schedule ── */
+function buildReminderSchedule(){
+  const events=[];
+  TASK_DEF.forEach(t=>{
+    if(statuses[t.id]==='Completed')return;
+    if(notif.milestonesOnly&&!t.firm)return;
+    if(!notif.enabledPhases.has(t.ph))return;
+    const{start,due}=getTaskDates(t);
+    if(due){notif.remindDays.forEach(d=>{const remDate=addDays(due,-d);if(remDate&&remDate>=TODAY.toISOString().slice(0,10)){events.push({sendOn:remDate,dueDate:due,taskId:t.id,taskName:t.task,phase:t.ph,owner:t.owner,firm:t.firm,type:d===1?'Tomorrow!':d===0?'Due today!':`Due in ${d} days`,typeKey:'due'});}});}
+    if(notif.notifyOnStart&&start&&start>=TODAY.toISOString().slice(0,10)){events.push({sendOn:start,dueDate:due,taskId:t.id,taskName:t.task,phase:t.ph,owner:t.owner,firm:t.firm,type:'Starting today',typeKey:'start'});}
+  });
+  return events.sort((a,b)=>a.sendOn.localeCompare(b.sendOn));
+}
+
+/* ════════════════════════════════════════════════════
+   RENDER VIEWS
+════════════════════════════════════════════════════ */
+function renderDashboard(){
+  const total=TASK_DEF.length,done=TASK_DEF.filter(t=>statuses[t.id]==='Completed').length;
+  const inp=TASK_DEF.filter(t=>statuses[t.id]==='In Progress').length;
+  const blk=TASK_DEF.filter(t=>statuses[t.id]==='Blocked').length;
+  const pct=Math.round(done/total*100);
+  const changed=TASK_DEF.filter(t=>statuses[t.id]!==t.status).length;
+  const unsaved=hasUnsavedChanges();
+  const milestones=[{label:'Survey soft launch ★',date:'2026-04-01',preview:false},{label:'Survey close ★',date:'2026-07-31',preview:false},{label:'Webinar ★',date:webDate,preview:webDate!==officialWeb},{label:'MSSP Alert Live ★',date:liveDate,preview:liveDate!==officialLive}];
+  const upcoming=TASK_DEF.filter(t=>statuses[t.id]!=='Completed').map(t=>{const{due}=getTaskDates(t);return{...t,due,d:daysUntil(due)};}).filter(t=>t.d!=null&&t.d>=0&&t.d<=30).sort((a,b)=>a.d-b.d).slice(0,6);
+  const phSt={};TASK_DEF.forEach(t=>{if(!phSt[t.ph])phSt[t.ph]={tot:0,done:0,inp:0};phSt[t.ph].tot++;if(statuses[t.id]==='Completed')phSt[t.ph].done++;if(statuses[t.id]==='In Progress')phSt[t.ph].inp++;});
+  return`
+  ${unsaved?`<div class="shift-banner"><div><div style="font-size:12px;color:#7A4F00;font-weight:600">⚠ Preview mode — exploring date changes</div><div style="font-size:11px;color:#A0700A;margin-top:2px">Live Event: ${fmtD(liveDate)} · Webinar: ${fmtD(webDate)} · These are not the official saved dates.</div></div><button class="reset-link" onclick="discardPreview()">Discard preview</button></div>`:''}
+  ${changed>0?`<div class="changed-banner"><span style="font-size:12px;color:#0C447C"><strong>${changed}</strong> status change${changed!==1?'s':''}</span><button class="export-btn" onclick="exportCSV('changed')"><svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M8 1v9M5 7l3 3 3-3M2 11v2a1 1 0 001 1h10a1 1 0 001-1v-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Export changes</button></div>`:''}
+  <div class="grid4">
+    <div class="card-sm"><div class="stat-label">Total tasks</div><div class="stat-val">${total}</div><div class="stat-sub">11 phases</div></div>
+    <div class="card-sm"><div class="stat-label">Completed</div><div class="stat-val" style="color:#3B6D11">${done}</div><div class="stat-sub">${pct}% complete</div></div>
+    <div class="card-sm"><div class="stat-label">In progress</div><div class="stat-val" style="color:#854F0B">${inp}</div><div class="stat-sub">${TASK_DEF.filter(t=>statuses[t.id]==='Not Started').length} not started</div></div>
+    <div class="card-sm"><div class="stat-label">Blocked</div><div class="stat-val" style="color:${blk>0?'#A32D2D':'#888780'}">${blk}</div><div class="stat-sub">${blk===0?'All clear':'Needs attention'}</div></div>
+  </div>
+  <div style="margin-bottom:6px"><div style="display:flex;justify-content:space-between;font-size:11px;color:#666;margin-bottom:4px"><span>Overall progress</span><span>${pct}%</span></div><div style="height:6px;background:#F0EFE8;border-radius:3px;overflow:hidden"><div style="height:100%;width:${pct}%;background:#639922;border-radius:3px;transition:width .5s"></div></div></div>
+  <div class="grid2" style="margin-top:14px">
+    <div class="card">
+      <div class="section-title">Official milestones</div>
+      ${milestones.map(m=>{const d=daysUntil(m.date),past=d<0,soon=d>=0&&d<=14;return`<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #F0EFE8"><div><div style="font-size:11px;color:#666">${m.label}${m.preview?' <span style="display:inline-block;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700;background:#FFF0D6;color:#8A4800;border:1px solid #E5A83A;vertical-align:middle">preview</span>':''}</div><div style="font-size:12px;font-weight:600;margin-top:1px">${fmtD(m.date)}</div></div><div style="text-align:right"><div style="font-size:18px;font-weight:500;color:${past?'#888780':soon?'#A32D2D':'#185FA5'}">${past?'Done':d===0?'Today':d}</div><div style="font-size:10px;color:#999">${past?'completed':d===0?'':d===1?'day away':'days away'}</div></div></div>`;}).join('')}
+      <div style="font-size:10px;color:#888;margin-top:8px">${unsaved?'<span style="color:#C8960C">⚠ Showing preview dates — save in Dates tab to make official</span>':'Showing officially saved dates — go to Dates tab to explore changes'}</div>
+    </div>
+    <div class="card">
+      <div class="section-title">Coming due (next 30 days)</div>
+      ${upcoming.length===0?'<div style="font-size:12px;color:#666;padding:8px 0">No tasks due in the next 30 days</div>':upcoming.map(t=>`<div class="upcoming-row"><div style="font-size:11px;font-weight:600;min-width:68px;color:#666">${t.d===0?'Today':t.d===1?'Tomorrow':'In '+t.d+'d'}</div><div style="flex:1"><div style="font-size:12px">${t.task}</div><div style="font-size:11px;color:#999;margin-top:1px">${t.owner}</div></div>${sBadge(statuses[t.id])}</div>`).join('')}
+    </div>
+  </div>
+  <div class="card">
+    <div class="section-title">Progress by phase</div>
+    ${PHASE_ORDER.map(ph=>{const s=phSt[ph]||{tot:0,done:0,inp:0};if(!s.tot)return'';const ps=PS[ph]||{bar:'#888'};const dp=Math.round(s.done/s.tot*100),ip=Math.round(s.inp/s.tot*100);return`<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="width:10px;height:10px;border-radius:2px;flex-shrink:0;background:${ps.bar}"></div><div style="font-size:12px;color:#666;width:200px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${ph}</div><div style="flex:1;height:6px;background:#F0EFE8;border-radius:3px;overflow:hidden"><div style="height:100%;display:flex"><div style="height:100%;width:${dp}%;background:${ps.bar};transition:width .4s"></div><div style="height:100%;width:${ip}%;background:${ps.bar};opacity:.4;transition:width .4s"></div></div></div><div class="prog-pct">${dp}%</div><div style="font-size:11px;color:#666;width:40px;text-align:right">${s.done}/${s.tot}</div></div>`;}).join('')}
+    <div style="font-size:10px;color:#999;margin-top:4px">Solid = completed · Faded = in progress</div>
+  </div>`;
+}
+
+function renderSchedule(){
+  const phases=['All',...PHASE_ORDER],statsList=['All','Not Started','In Progress','Completed','Blocked'];
+  let filtered=TASK_DEF.filter(t=>{
+    if(filterPhase!=='All'&&t.ph!==filterPhase)return false;
+    if(filterStatus!=='All'&&statuses[t.id]!==filterStatus)return false;
+    if(searchText&&!t.task.toLowerCase().includes(searchText.toLowerCase())&&!t.ph.toLowerCase().includes(searchText.toLowerCase()))return false;
+    return true;
+  });
+  const changed=TASK_DEF.filter(t=>statuses[t.id]!==t.status).length;
+  return`
+  <div class="filters">
+    <input class="search-in" placeholder="Search tasks..." oninput="searchText=this.value;renderView()" value="${searchText}">
+    <select class="filter-sel" onchange="filterPhase=this.value;renderView()">${phases.map(p=>`<option value="${p}" ${filterPhase===p?'selected':''}>${p}</option>`).join('')}</select>
+    <select class="filter-sel" onchange="filterStatus=this.value;renderView()">${statsList.map(s=>`<option value="${s}" ${filterStatus===s?'selected':''}>${s}</option>`).join('')}</select>
+    <span style="font-size:11px;color:#666">${filtered.length} task${filtered.length!==1?'s':''}</span>
+    <div style="margin-left:auto;display:flex;gap:6px;align-items:center">
+      <span id="sync-badge" style="font-size:11px;white-space:nowrap">${storageReady?`<span style="color:#2A6B1A">🟢 Synced</span>`:`<span style="color:#C8220C">⚠ Local only — open in Claude.ai to sync</span>`}</span>
+      ${changed>0?`<button class="export-btn" style="padding:4px 10px;font-size:11px" onclick="exportCSV('changed')">Changes (${changed})</button>`:''}
+      <button class="export-btn" style="padding:4px 10px;font-size:11px" onclick="exportCSV('all')">Export all</button>
+    </div>
+      <button class="export-btn" style="padding:4px 10px;font-size:11px" onclick="exportCSV('all')">Export all</button>
+    </div>
+  </div>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th style="width:28px">#</th><th>Task</th><th>Phase</th><th>Owner</th><th>Start</th><th>Due</th><th style="text-align:center">Wkdays</th><th>Dates</th><th>Status</th></tr></thead>
+    <tbody>
+    ${filtered.map(t=>{
+      const{start,due}=getTaskDates(t),{start:oS,due:oE}=getOrigDates(t);
+      const wd=networkDays(start,due),dueD=parseD(due);
+      const overdue=dueD&&dueD<TODAY&&statuses[t.id]!=='Completed';
+      const dateChanged=t.anchor&&(start!==oS||due!==oE),stChanged=statuses[t.id]!==t.status;
+      return`<tr class="${dateChanged&&!stChanged?'diff-row':''}">
+        <td style="font-size:11px;color:#999">${t.id}${t.firm?'<span style="color:#C8960C;margin-left:2px;font-size:15px;vertical-align:middle">★</span>':''}</td>
+        <td><span style="font-size:12px;max-width:260px;display:inline-block">${t.task}</span>${stChanged?`<span style="font-size:9px;margin-left:4px;color:#185FA5">●</span>`:''}</td>
+        <td>${pBadge(t.ph)}</td>
+        <td style="font-size:11px;color:#666;white-space:nowrap;max-width:120px;overflow:hidden;text-overflow:ellipsis">${t.owner}</td>
+        <td style="font-size:11px;color:#666;white-space:nowrap">${fmtD(start)}</td>
+        <td style="font-size:11px;white-space:nowrap;color:${overdue?'#A32D2D':'#666'}">${fmtD(due)}${overdue?' ⚠':''}</td>
+        <td style="text-align:center;font-size:12px;color:#666">${typeof wd==='number'?wd:'—'}</td>
+        <td style="white-space:nowrap">${anchorTag(t)}</td>
+        <td><select class="status-sel" onchange="updateStatus(${t.id},this.value)" style="background:${SS[statuses[t.id]]?.bg||'#eee'};color:${SS[statuses[t.id]]?.text||'#333'}">
+          ${['Not Started','In Progress','Completed','Blocked'].map(s=>`<option value="${s}" ${statuses[t.id]===s?'selected':''}>${s}</option>`).join('')}
+        </select></td>
+      </tr>`;
+    }).join('')}
+    </tbody>
+  </table></div>
+  <div style="font-size:10px;color:#999;margin-top:6px">★ Firm · ● status updated · <span class="cascade-badge cascade-event" style="font-size:9px">↳ event</span> shifts with Live Event · <span class="cascade-badge cascade-webinar" style="font-size:9px">↳ webinar</span> shifts with Webinar</div>`;
+}
+
+function renderCalendar(){
+  const mn=MONTH_NAMES[calMonth];
+  const startDow=new Date(calYear,calMonth,1).getDay();
+  function getDayInfo(day){
+    const ds=calYear+'-'+String(calMonth+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+    const active=TASK_DEF.filter(t=>{const{start,due}=getTaskDates(t);return start&&due&&start<=ds&&due>=ds;});
+    if(!active.length)return null;
+    active.sort((a,b)=>(PP[b.ph]||0)-(PP[a.ph]||0));
+    return{ph:active[0].ph,starting:active.filter(t=>{const{start}=getTaskDates(t);return start===ds;}),firmDay:active.some(t=>{if(!t.firm)return false;const{start,due}=getTaskDates(t);return start===ds||due===ds;}),count:active.length};
+  }
+  const calStart=new Date(calYear,calMonth,1-startDow);
+  let cells=[];
+  for(let i=0;i<42;i++){const d=new Date(calStart);d.setDate(calStart.getDate()+i);const inM=d.getMonth()===calMonth&&d.getFullYear()===calYear;const ds=d.toISOString().slice(0,10);cells.push({day:d.getDate(),inM,isWE:d.getDay()===0||d.getDay()===6,isHol:!!HOLIDAYS[ds],isToday:ds===TODAY.toISOString().slice(0,10),info:inM?getDayInfo(d.getDate()):null,holName:HOLIDAYS[ds]});}
+  while(cells.length>7&&!cells.slice(-7).some(c=>c.inM))cells.splice(-7);
+  const canPrev=!(calYear===2026&&calMonth===2),canNext=!(calYear===2026&&calMonth===10);
+  return`
+  <div class="cal-wrap">
+    <div class="cal-header">
+      <div style="display:flex;gap:6px">
+        <button class="cal-nav-btn" onclick="navMonth(-1)" ${!canPrev?'disabled style="opacity:.3"':''}>← Prev</button>
+        <button class="cal-nav-btn" onclick="navMonth(1)" ${!canNext?'disabled style="opacity:.3"':''}>Next →</button>
+      </div>
+      <div style="font-size:14px;font-weight:600">${mn} ${calYear}</div>
+      <div style="font-size:11px;color:#666">${TASK_DEF.filter(t=>{const{start}=getTaskDates(t);return start&&start.startsWith(calYear+'-'+String(calMonth+1).padStart(2,'0'));}).length} tasks starting</div>
+    </div>
+    <div class="cal-grid">
+      ${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=>`<div class="cal-dow">${d}</div>`).join('')}
+      ${cells.map(c=>{
+        if(!c.inM)return`<div class="cal-day" style="background:#F5F5F3"></div>`;
+        const info=c.info,ps=info?PS[info.ph]:null;
+        const bg=info?.firmDay?'#FFF9E6':c.isHol?'#FFF7E6':c.isWE?'#F8F7F4':ps?ps.bg:'';
+        const bl=info?.firmDay?'border-left:2px solid #C8960C;':'';
+        const to=c.isToday?'outline:2px solid #185FA5;outline-offset:-2px;':'';
+        return`<div class="cal-day" style="background:${bg};${bl}${to}">
+          <div class="cal-day-num" style="${c.isWE?'color:#999':''}">${info?.firmDay?'<span style="color:#C8960C;font-size:10px;margin-right:1px">★</span>':''}${c.day}</div>
+          ${c.isHol?`<div style="font-size:9px;color:#A0522D;margin-bottom:2px">■ ${c.holName}</div>`:''}
+          ${info?.starting.slice(0,2).map(t=>`<div class="cal-chip" style="background:${ps?.bar||'#888'}">#${t.id} ${t.task.slice(0,16)}${t.task.length>16?'…':''}</div>`).join('')}
+          ${info?.starting.length>2?`<div style="font-size:9px;color:${ps?.text||'#555'};margin-top:1px">+${info.starting.length-2} more</div>`:''}
+          ${info&&!info.starting.length?`<div style="font-size:9px;color:${ps?.text||'#888'};opacity:.7;margin-top:1px">${info.count} active</div>`:''}
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="legend-wrap">
+      ${PHASE_ORDER.map(p=>`<div class="legend-item"><div class="legend-dot" style="background:${PS[p].bar}"></div>${p}</div>`).join('')}
+      <div class="legend-item"><div class="legend-dot" style="background:#C8960C;border-radius:50%"></div>★ Firm</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#D4A849;border-radius:50%"></div>■ Holiday</div>
+    </div>
+  </div>`;
+}
+
+/* ════════════════════════════════
+   DATES TAB  (PIN-protected save)
+════════════════════════════════ */
+function renderSettings(){
+  const liveTaskCount=TASK_DEF.filter(t=>t.anchor==='live').length;
+  const webTaskCount=TASK_DEF.filter(t=>t.anchor==='web').length;
+  const liveAffected=TASK_DEF.filter(t=>t.anchor==='live').map(t=>`#${t.id} ${t.task.slice(0,50)}${t.task.length>50?'…':''}`);
+  const webAffected=TASK_DEF.filter(t=>t.anchor==='web').map(t=>`#${t.id} ${t.task.slice(0,50)}${t.task.length>50?'…':''}`);
+  const unsaved=hasUnsavedChanges();
+  const liveDiff=liveDate!==officialLive;
+  const webDiff=webDate!==officialWeb;
+
+  return`
+  <div style="max-width:700px">
+
+    <!-- Status banner -->
+    ${adminUnlocked
+      ? `<div class="admin-banner">
+           <div style="display:flex;align-items:center;gap:10px">
+             <div style="width:32px;height:32px;background:#2A6B1A;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🔓</div>
+             <div>
+               <div style="font-size:13px;font-weight:600;color:#1a4a0a">Admin mode active this session</div>
+               <div style="font-size:11px;color:#3B6D11;margin-top:1px">You can save date changes directly. Lock when finished.</div>
+             </div>
+           </div>
+           <button class="action-btn" onclick="lockAdmin()" style="font-size:11px;white-space:nowrap">🔒 Lock admin</button>
+         </div>`
+      : `<div class="preview-banner">
+           <div style="width:32px;height:32px;background:#E5C76B;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">👁</div>
+           <div>
+             <div style="font-size:13px;font-weight:600;color:#5C3D00">Preview &amp; explore mode</div>
+             <div style="font-size:12px;color:#7A5200;margin-top:3px;line-height:1.6">
+               Anyone can move the dates below and see exactly how the schedule cascades.
+               <br>To make changes official, click <strong>Save as official dates</strong> and enter the admin PIN.
+             </div>
+           </div>
+         </div>`}
+
+    <!-- Live Event -->
+    <div class="anchor-card" style="border-color:${liveDateError?'#C8220C':liveDiff?'#E5A83A':'#E0E0DA'}">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:4px">
+        <div class="anchor-title">★ MSSP Alert Live event</div>
+        <span class="cascade-badge cascade-event" style="font-size:11px;padding:3px 10px">↳ ${liveTaskCount} tasks cascade</span>
+      </div>
+      <div style="font-size:12px;color:#666;margin-bottom:10px;line-height:1.6">Shifting this date adjusts all live event prep, results &amp; reporting, and post-event tasks.</div>
+      <div style="font-size:11px;color:#555;background:#F5F5F3;border-radius:6px;padding:7px 12px;margin-bottom:12px;line-height:1.5">
+        📅 <strong>3-day event</strong> &nbsp;·&nbsp; Start date must be <strong>Monday, Tuesday, or Wednesday</strong> so all days fall on workdays.
+        &nbsp;·&nbsp; Ends: <strong>${fmtD(addDays(liveDate,2))}</strong>
+      </div>
+      <div class="date-row">
+        <div class="date-label">Event starts</div>
+        <input type="date" class="date-input" value="${liveDate}" min="2026-09-01" max="2026-12-31"
+          style="${liveDateError?'border-color:#C8220C;background:#FFF5F5':liveDiff?'border-color:#E5A83A;background:#FFFDF5':''};"
+          onchange="applyLiveDate(this.value)">
+        ${liveDiff && !liveDateError?`<span class="preview-tag">Preview</span>`:``}
+      </div>
+      ${liveDateError?`<div style="font-size:12px;color:#C8220C;background:#FFF0F0;border:1px solid #F5C6C6;border-radius:6px;padding:8px 12px;margin-top:10px;line-height:1.5">
+        ⛔ ${liveDateError}
+      </div>`:''}
+      ${liveDiff && !liveDateError?`<div class="date-compare">
+        <span class="official-tag">✓ Official: ${fmtD(officialLive)}</span>
+        <span style="color:#888">→</span>
+        <span class="preview-tag">Preview: ${fmtD(liveDate)}</span>
+        <button class="reset-link" onclick="applyLiveDate('${officialLive}')" style="margin-left:4px">Discard</button>
+      </div>`:liveDateError?`<div style="margin-top:8px"><button class="reset-link" style="color:#C8220C" onclick="clearLiveDateError()">Keep current date (${fmtD(liveDate)})</button></div>`:''}
+      <div class="affected-list"><strong style="font-size:10px;display:block;margin-bottom:4px">Tasks that shift:</strong>${liveAffected.join('<br>')}</div>
+    </div>
+      <div class="affected-list"><strong style="font-size:10px;display:block;margin-bottom:4px">Tasks that shift:</strong>${liveAffected.join('<br>')}</div>
+    </div>
+
+    <!-- Webinar -->
+    <div class="anchor-card" style="border-color:${webDiff?'#E5A83A':'#E0E0DA'}">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:4px">
+        <div class="anchor-title">★ Webinar</div>
+        <span class="cascade-badge cascade-webinar" style="font-size:11px;padding:3px 10px">↳ ${webTaskCount} tasks cascade</span>
+      </div>
+      <div style="font-size:12px;color:#666;margin-bottom:14px;line-height:1.6">Shifting this date adjusts the webinar agenda, deck, and promotion tasks.</div>
+      <div class="date-row">
+        <div class="date-label">Webinar date</div>
+        <input type="date" class="date-input" value="${webDate}" min="2026-08-01" max="2026-11-30"
+          style="${webDiff?'border-color:#E5A83A;background:#FFFDF5':''};"
+          onchange="applyWebDate(this.value)">
+        ${webDiff?`<span class="preview-tag">Preview</span>`:``}
+      </div>
+      ${webDiff?`<div class="date-compare">
+        <span class="official-tag">✓ Official: ${fmtD(officialWeb)}</span>
+        <span style="color:#888">→</span>
+        <span class="preview-tag">Preview: ${fmtD(webDate)}</span>
+        <button class="reset-link" onclick="applyWebDate('${officialWeb}')" style="margin-left:4px">Discard</button>
+      </div>`:''}
+      <div class="affected-list"><strong style="font-size:10px;display:block;margin-bottom:4px">Tasks that shift:</strong>${webAffected.join('<br>')}</div>
+    </div>
+
+    <!-- Save bar -->
+    <div class="save-bar">
+      <div>
+        ${unsaved
+          ? `<div style="font-size:13px;font-weight:600;color:#5C3D00">You have unsaved date changes</div>
+             <div style="font-size:11px;color:#888;margin-top:2px">These are preview-only. Save to make them official.</div>`
+          : dateSavedAt
+            ? `<div style="font-size:13px;font-weight:600;color:#2A6B1A">✓ Official dates are up to date</div>
+               <div style="font-size:11px;color:#888;margin-top:2px">Last saved at ${fmtTime(dateSavedAt)}</div>`
+            : `<div style="font-size:13px;color:#666">No changes — using original dates</div>`}
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        ${unsaved?`<button class="reset-link" onclick="discardPreview()">Discard all</button>`:''}
+        <button class="lock-btn ${adminUnlocked?'unlocked':''}" onclick="requestSaveDates()" ${!unsaved?'disabled style="opacity:.45;cursor:not-allowed"':''}>
+          ${adminUnlocked
+            ? `<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M13 4L6 11l-3-3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Save as official dates`
+            : `<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="3" y="7" width="10" height="8" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M5 7V5a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 🔒 Save as official dates`}
+        </button>
+      </div>
+    </div>
+
+    <!-- Fixed dates -->
+    <div class="card" style="background:#F8F7F4;margin-top:4px">
+      <div class="section-title">Fixed dates (not adjustable)</div>
+      <div style="font-size:12px;color:#666;line-height:1.8">
+        <strong>Survey soft launch</strong> — Apr 1, 2026 &nbsp;·&nbsp; <strong>Survey close</strong> — Jul 31, 2026 &nbsp;·&nbsp; All tasks in phases 1–6
+      </div>
+    </div>
+
+    <!-- PIN note -->
+    <div style="font-size:11px;color:#999;line-height:1.7;padding:4px 2px">
+      The admin PIN is set in the HTML file. To change it: open the file in Notepad or TextEdit, find the line <code style="background:#F0EFE8;padding:1px 5px;border-radius:3px">const ADMIN_PIN = '...'</code> near the top of the script, replace the value in quotes, and save. Contact your project admin for the current PIN.
+    </div>
+
+  </div>`;
+}
+
+/* ════════════════════════════
+   NOTIFICATIONS VIEW
+════════════════════════════ */
+function renderNotify(){
+  const sched=buildReminderSchedule();
+  const upcoming90=sched.filter(e=>{const d=daysUntil(e.sendOn);return d!=null&&d>=0&&d<=90;});
+  const emailOk=isValidEmail(notif.email);
+  return`
+  <div style="max-width:740px">
+    <div class="notif-section">
+      <div class="section-title" style="margin-bottom:6px">Your email address</div>
+      <div style="font-size:12px;color:#666;margin-bottom:12px">Enter your email to generate personalized reminders. Reminders are sent via <strong>your own email client</strong> — nothing is sent automatically.</div>
+      <div class="email-field">
+        <input class="email-input ${notif.email?(emailOk?'valid':'invalid'):''}" type="email" placeholder="you@company.com" value="${notif.email}"
+          oninput="notif.email=this.value;notif.saved=false;renderNotifPreview()">
+        <button class="primary-btn" onclick="saveEmail()" ${!emailOk?'disabled':''}>
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M13 4L6 11l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          ${notif.saved?'Saved ✓':'Save email'}
+        </button>
+      </div>
+      ${notif.saved?`<div style="margin-top:8px"><span class="saved-chip"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M13 4L6 11l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Configured for ${notif.email}</span></div>`:''}
+    </div>
+    <div class="notif-section">
+      <div class="section-title">When to send reminders</div>
+      <div style="font-size:12px;color:#666;margin-bottom:12px">Days before each task's due date:</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px">
+        ${ALL_REMIND_OPTIONS.map(d=>`<div class="day-chip ${notif.remindDays.includes(d)?'selected':''}" onclick="toggleRemindDay(${d})">${d}d</div>`).join('')}
+      </div>
+      <div style="font-size:11px;color:#888;margin-top:6px">Selected: ${notif.remindDays.length===0?'none':notif.remindDays.sort((a,b)=>b-a).map(d=>d+' day'+((d!==1)?'s':'')+' before').join(', ')}</div>
+    </div>
+    <div class="notif-section">
+      <div class="section-title">What to include</div>
+      <div class="toggle-row"><div><div class="toggle-label">Firm milestones only</div><div class="toggle-sub">Only the 4 confirmed dates (survey launch/close, webinar, live event)</div></div><label class="toggle"><input type="checkbox" ${notif.milestonesOnly?'checked':''} onchange="notif.milestonesOnly=this.checked;renderNotifPreview()"><span class="toggle-slider"></span></label></div>
+      <div class="toggle-row"><div><div class="toggle-label">Remind on task start date</div><div class="toggle-sub">Notification on the day a task is scheduled to begin</div></div><label class="toggle"><input type="checkbox" ${notif.notifyOnStart?'checked':''} onchange="notif.notifyOnStart=this.checked;renderNotifPreview()"><span class="toggle-slider"></span></label></div>
+      <div class="toggle-row"><div><div class="toggle-label">Alert on blocked tasks</div><div class="toggle-sub">Highlight any task marked Blocked in your digest</div></div><label class="toggle"><input type="checkbox" ${notif.notifyBlocked?'checked':''} onchange="notif.notifyBlocked=this.checked;renderNotifPreview()"><span class="toggle-slider"></span></label></div>
+    </div>
+    <div class="notif-section">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div class="section-title" style="margin-bottom:0">Phases to include</div>
+        <div style="display:flex;gap:8px"><button class="reset-link" onclick="notif.enabledPhases=new Set(PHASE_ORDER);renderNotifPreview()">All</button><button class="reset-link" onclick="notif.enabledPhases=new Set();renderNotifPreview()">None</button></div>
+      </div>
+      <div class="phase-check-grid">
+        ${PHASE_ORDER.map(ph=>{const ps=PS[ph]||{bar:'#888'};return`<label class="phase-check-item"><input type="checkbox" ${notif.enabledPhases.has(ph)?'checked':''} onchange="togglePhase('${ph.replace(/'/g,"\\'")}')"><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:${ps.bar};flex-shrink:0"></span>${ph}</label>`;}).join('')}
+      </div>
+    </div>
+    <div class="notif-section" style="background:#F0F6FF;border-color:#C0D8F5">
+      <div class="section-title" style="color:#185FA5">Send reminders via email</div>
+      <div style="font-size:12px;color:#1a4a80;margin-bottom:14px;line-height:1.6">Opens your email client (Outlook, Gmail, Apple Mail) pre-filled with your reminder schedule.</div>
+      <div class="mailto-row">
+        <button class="primary-btn" onclick="buildMailto('digest')" ${!emailOk?'disabled':''}>
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M2 4h12v9a1 1 0 01-1 1H3a1 1 0 01-1-1V4zm0 0l6 5 6-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Email me 30-day digest
+        </button>
+        <button class="primary-btn" onclick="buildMailto('milestones')" ${!emailOk?'disabled':''} style="background:#7A4F00">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 2l1.5 3 3.5.5-2.5 2.5.5 3.5L8 10l-3 1.5.5-3.5L3 5.5l3.5-.5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Email milestone reminders
+        </button>
+        <button class="export-btn" onclick="exportReminderCSV()">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1v9M5 7l3 3 3-3M2 11v2a1 1 0 001 1h10a1 1 0 001-1v-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Export CSV
+        </button>
+      </div>
+      ${!emailOk?`<div style="font-size:11px;color:#888;margin-top:8px">Enter a valid email above to enable send buttons.</div>`:''}
+    </div>
+    <div class="notif-section" id="notif-preview-panel">${buildPreviewHTML(sched,upcoming90)}</div>
+  </div>`;
+}
+
+function buildPreviewHTML(sched,upcoming90){
+  if(sched.length===0)return`<div class="section-title">Reminder preview</div><div style="font-size:12px;color:#888;padding:8px 0">No reminders match your current settings.</div>`;
+  const blocked=TASK_DEF.filter(t=>statuses[t.id]==='Blocked');
+  return`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px">
+      <div class="section-title" style="margin-bottom:0">Reminder preview</div>
+      <div style="font-size:11px;color:#666">${sched.length} total · ${upcoming90.length} in next 90 days</div>
+    </div>
+    ${notif.notifyBlocked&&blocked.length>0?`<div style="background:#FCEBEB;border:1px solid #F5C0C0;border-radius:6px;padding:8px 12px;margin-bottom:10px;font-size:12px;color:#7A1A1A"><strong>⚠ ${blocked.length} blocked task${blocked.length!==1?'s':''}</strong>: ${blocked.map(t=>`#${t.id} ${t.task.slice(0,35)}…`).join(', ')}</div>`:''}
+    ${upcoming90.length===0?'<div style="font-size:12px;color:#888">No reminders in the next 90 days.</div>':upcoming90.slice(0,12).map(e=>{const ps=PS[e.phase]||{bar:'#888',bg:'#eee',text:'#333'};return`<div class="notif-preview-row"><div class="notif-date-col">${fmtDLong(e.sendOn)}</div><div class="notif-remind-col"><span class="remind-tag ${e.firm?'milestone-tag':''}">${e.type}</span></div><div class="notif-task-col"><div style="font-size:12px;font-weight:500">#${e.taskId} ${e.taskName}</div><div style="margin-top:2px"><span class="pill" style="background:${ps.bg};color:${ps.text};font-size:9px">${e.phase}</span></div></div><div class="notif-owner-col">${e.owner}</div></div>`;}).join('')}
+    ${upcoming90.length>12?`<div style="font-size:11px;color:#888;padding:8px 0">+${upcoming90.length-12} more — export CSV to see all.</div>`:''}`;
+}
+
+function renderNotifPreview(){
+  const panel=document.getElementById('notif-preview-panel');if(!panel)return;
+  const sched=buildReminderSchedule();
+  const upcoming90=sched.filter(e=>{const d=daysUntil(e.sendOn);return d!=null&&d>=0&&d<=90;});
+  panel.innerHTML=buildPreviewHTML(sched,upcoming90);
+}
+
+function buildMailto(mode){
+  if(!notif.email||!isValidEmail(notif.email)){showToast('Please enter a valid email first.');return;}
+  const sched=buildReminderSchedule();
+  if(mode==='digest'){
+    const next30=sched.filter(e=>{const d=daysUntil(e.sendOn);return d!=null&&d>=0&&d<=30;}).slice(0,10);
+    const subj=encodeURIComponent('MSSP Top 250 2026 — 30-Day Reminder Preview');
+    const body=encodeURIComponent(`MSSP Top 250 2026 — Upcoming Reminders (next 30 days)\nGenerated: ${new Date().toLocaleDateString()}\n\n`+(next30.length===0?'No reminders in the next 30 days.':next30.map(e=>`Send: ${fmtDLong(e.sendOn)} | #${e.taskId} ${e.taskName} | ${e.type} (${e.owner})`).join('\n'))+`\n\nFull schedule: ${sched.length} total reminder events.`);
+    window.location.href=`mailto:${notif.email}?subject=${subj}&body=${body}`;
+  } else {
+    const firm=sched.filter(e=>e.firm).slice(0,8);
+    const subj=encodeURIComponent('MSSP Top 250 2026 — Firm Milestone Reminders');
+    const body=encodeURIComponent(`MSSP Top 250 2026 — Firm Milestone Reminder Schedule\n\n`+(firm.length===0?'No upcoming firm milestone reminders.':firm.map(e=>`Send: ${fmtDLong(e.sendOn)} | ${e.taskName} | ${e.type}`).join('\n'))+`\n\nAdd these to your calendar for best results.`);
+    window.location.href=`mailto:${notif.email}?subject=${subj}&body=${body}`;
+  }
+  showToast('Opening your email client…');
+}
+
+/* ── Actions ── */
+/* ── Shared status storage ─────────────────────────────────────────── */
+async function initStorage(){
+  TASK_DEF.forEach(t => statuses[t.id] = t.status); // seed defaults first
+  try {
+    if(typeof window.storage === 'undefined') throw new Error('no storage');
+    const res = await window.storage.get(STATUS_KEY, true);
+    if(res && res.value){
+      const saved = JSON.parse(res.value);
+      // Merge: only overwrite if saved value is a known status
+      const known = new Set(['Not Started','In Progress','Completed','Blocked']);
+      Object.keys(saved).forEach(id => { if(known.has(saved[id])) statuses[id] = saved[id]; });
+    }
+    storageReady = true;
+    lastSyncTime = new Date();
+    syncTimer = setInterval(pollStorage, 30000); // poll every 30s
+  } catch(e){
+    storageReady = false;
+  }
+  renderView();
+}
+
+async function pollStorage(){
+  if(!storageReady) return;
+  try {
+    const res = await window.storage.get(STATUS_KEY, true);
+    if(!res || !res.value) return;
+    const saved = JSON.parse(res.value);
+    const known = new Set(['Not Started','In Progress','Completed','Blocked']);
+    let changed = false;
+    Object.keys(saved).forEach(id => {
+      if(known.has(saved[id]) && statuses[id] !== saved[id]){
+        statuses[id] = saved[id]; changed = true;
+      }
+    });
+    lastSyncTime = new Date();
+    if(changed){ showToast('📋 Status updates pulled from shared storage'); renderView(); }
+    else { updateSyncBadge(); }
+  } catch(e){}
+}
+
+async function persistStatuses(){
+  if(!storageReady) return;
+  syncPending = true;
+  updateSyncBadge();
+  try {
+    await window.storage.set(STATUS_KEY, JSON.stringify(statuses), true);
+    lastSyncTime = new Date();
+  } catch(e){ showToast('⚠ Could not save to shared storage'); }
+  syncPending = false;
+  updateSyncBadge();
+}
+
+function updateSyncBadge(){
+  const el = document.getElementById('sync-badge');
+  if(!el) return;
+  if(!storageReady){
+    el.innerHTML = '<span style="color:#C8220C">⚠ Local only — open in Claude.ai to sync</span>';
+    return;
+  }
+  if(syncPending){
+    el.innerHTML = '<span style="color:#854F0B">⏳ Saving…</span>';
+    return;
+  }
+  const ago = lastSyncTime ? Math.round((Date.now()-lastSyncTime.getTime())/1000) : null;
+  const agoStr = ago===null ? '' : ago < 5 ? 'just now' : ago < 60 ? ago+'s ago' : Math.round(ago/60)+'m ago';
+  el.innerHTML = `<span style="color:#2A6B1A">🟢 Synced ${agoStr}</span> <button class="reset-link" style="font-size:10px;margin-left:6px" onclick="pollStorage()">Refresh</button>`;
+}
+
+function updateStatus(id, s){
+  statuses[id] = s;
+  persistStatuses();   // async, non-blocking
+  renderView();
+}
+function applyLiveDate(v){
+  if(!v) return;
+  // Parse as local date (avoid UTC shift)
+  const parts = v.split('-');
+  const d = new Date(+parts[0], +parts[1]-1, +parts[2]);
+  const dow = d.getDay(); // 0=Sun,1=Mon,2=Tue,3=Wed,4=Thu,5=Fri,6=Sat
+  if(dow !== 1 && dow !== 2 && dow !== 3){
+    // Invalid — show error, do NOT change the date
+    liveDateError = 'The event must start on a Monday, Tuesday, or Wednesday so all 3 days fall on workdays. Please choose a different date.';
+    renderView();
+    return;
+  }
+  liveDateError = '';
+  liveDate = v;
+  updateHeader();
+  renderView();
+}
+function clearLiveDateError(){ liveDateError=''; renderView(); }
+function applyWebDate(v){if(!v)return;webDate=v;updateHeader();renderView();}
+function discardPreview(){liveDate=officialLive;webDate=officialWeb;updateHeader();renderView();showToast('Preview discarded — showing official dates');}
+function saveEmail(){if(isValidEmail(notif.email)){notif.saved=true;renderView();showToast('Email saved for '+notif.email);}}
+function toggleRemindDay(d){const i=notif.remindDays.indexOf(d);if(i>-1)notif.remindDays.splice(i,1);else notif.remindDays.push(d);renderNotifPreview();document.querySelectorAll('.day-chip').forEach(el=>{const v=parseInt(el.textContent);el.classList.toggle('selected',notif.remindDays.includes(v));});}
+function togglePhase(ph){if(notif.enabledPhases.has(ph))notif.enabledPhases.delete(ph);else notif.enabledPhases.add(ph);renderNotifPreview();}
+function resetAll(){
+  liveDate=ORIG_LIVE;webDate=ORIG_WEB;officialLive=ORIG_LIVE;officialWeb=ORIG_WEB;
+  adminUnlocked=false;dateSavedAt=null;
+  TASK_DEF.forEach(t=>statuses[t.id]=t.status);
+  if(storageReady){ window.storage.set(STATUS_KEY, JSON.stringify(statuses), true).catch(()=>{}); }
+  updateHeader();renderView();showToast('All dates and statuses reset');
+}
+function navMonth(d){calMonth+=d;if(calMonth<0){calMonth=11;calYear--;}if(calMonth>11){calMonth=0;calYear++;}if(calYear===2026&&calMonth<2)calMonth=2;if(calYear===2026&&calMonth>10)calMonth=10;renderView();}
+function switchView(view,btn){currentView=view;document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');renderView();}
+function renderView(){const c=document.getElementById('content');if(currentView==='dashboard')c.innerHTML=renderDashboard();else if(currentView==='schedule')c.innerHTML=renderSchedule();else if(currentView==='calendar')c.innerHTML=renderCalendar();else if(currentView==='notify')c.innerHTML=renderNotify();else if(currentView==='settings')c.innerHTML=renderSettings();}
+
+/* ── Update banner ── */
+function checkUpdateBanner(){
+  try {
+    const seen = localStorage.getItem('mssp250_seen_version');
+    if(seen !== FILE_VERSION){
+      document.getElementById('update-version-label').textContent = FILE_VERSION;
+      document.getElementById('update-banner').style.display = 'flex';
+    }
+  } catch(e){} // localStorage unavailable — fail silently
+}
+function dismissUpdateBanner(){
+  document.getElementById('update-banner').style.display = 'none';
+  try { localStorage.setItem('mssp250_seen_version', FILE_VERSION); } catch(e){}
+}
+
+/* close modal on backdrop click */
+document.getElementById('pin-modal').addEventListener('click',function(e){if(e.target===this)closePinModal();});
+document.getElementById('help-modal').addEventListener('click',function(e){if(e.target===this)closeHelp();});
+
+function openHelp(){document.getElementById('help-modal').style.display='flex';}
+function closeHelp(){document.getElementById('help-modal').style.display='none';}
+
+updateHeader();
+checkUpdateBanner();
+initStorage(); // loads statuses from shared storage, then calls renderView()
+</script>
+</body>
+</html>
