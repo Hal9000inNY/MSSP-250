@@ -232,10 +232,7 @@
         </div>
         <div class="help-row"><div class="help-key">Who needs it</div><div class="help-val">Only the 1–2 people authorized to commit official date changes. Everyone else can explore freely without a PIN.</div></div>
         <div class="help-row"><div class="help-key">How it works</div><div class="help-val">Click <strong>🔒 Save as official dates</strong> in the Dates tab. A PIN prompt appears. Once entered correctly, admin mode stays active for the rest of your browser session — you won't be asked again until you lock or close the file.</div></div>
-        <div class="help-row"><div class="help-key">Changing the PIN</div><div class="help-val">
-          Open the HTML file in Notepad (Windows) or TextEdit (Mac). Find the line near the top of the script and replace the value in quotes with your new PIN:
-          <div class="help-pin-box"><code>const ADMIN_PIN = '...';</code><br>Replace the value between the quotes, then save the file. Contact your project admin for the current PIN.</div>
-        </div></div>
+
       </div>
 
       <!-- Status colors -->
@@ -839,7 +836,7 @@ function renderSettings(){
 
     <!-- PIN note -->
     <div style="font-size:11px;color:#999;line-height:1.7;padding:4px 2px">
-      The admin PIN is set in the HTML file. To change it: open the file in Notepad or TextEdit, find the line <code style="background:#F0EFE8;padding:1px 5px;border-radius:3px">const ADMIN_PIN = '...'</code> near the top of the script, replace the value in quotes, and save. Contact your project admin for the current PIN.
+      Contact your project admin for the PIN.
     </div>
 
   </div>`;
