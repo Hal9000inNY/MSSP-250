@@ -198,7 +198,7 @@
         <div class="help-row"><div class="help-key">Schedule</div><div class="help-val">Full list of all 46 tasks. Search, filter by phase or status, update task status inline with the dropdown, and export to CSV.</div></div>
         <div class="help-row"><div class="help-key">Calendar</div><div class="help-val">Monthly view from March–November 2026. Navigate with Prev/Next. Task chips appear on their start dates, color-coded by phase. ★ marks firm dates; ■ marks holidays.</div></div>
         <div class="help-row"><div class="help-key">🔔 Reminders</div><div class="help-val">Configure email reminder timing and preferences, then generate a pre-filled email via your local email client (Outlook, Gmail, etc.). Nothing is sent automatically.</div></div>
-        <div class="help-row"><div class="help-key">Dates</div><div class="help-val">Adjust the two anchor dates — Live Event and Webinar. Anyone can explore changes in preview mode. Saving requires the admin PIN. The Live Event is a 3-day event and must start on a Monday, Tuesday, or Wednesday so all days fall on workdays — the app will block any other choice.</div></div>
+        <div class="help-row"><div class="help-key">Dates</div><div class="help-val">Adjust the two anchor dates — Live Event and Webinar. Anyone can explore changes in preview mode. Saving requires the admin PIN. The Live Event is a 3-day event and must start on a Sunday, Monday, Tuesday, or Wednesday so all days fall on workdays — the app will block any other choice.</div></div>
       </div>
 
       <!-- Date cascade -->
@@ -758,7 +758,7 @@ function renderSettings(){
       </div>
       <div style="font-size:12px;color:#666;margin-bottom:10px;line-height:1.6">Shifting this date adjusts all live event prep, results &amp; reporting, and post-event tasks.</div>
       <div style="font-size:11px;color:#555;background:#F5F5F3;border-radius:6px;padding:7px 12px;margin-bottom:12px;line-height:1.5">
-        📅 <strong>3-day event</strong> &nbsp;·&nbsp; Start date must be <strong>Monday, Tuesday, or Wednesday</strong> so all days fall on workdays.
+        📅 <strong>3-day event</strong> &nbsp;·&nbsp; Start date must be <strong>Sunday, Monday, Tuesday, or Wednesday</strong> so all days fall on workdays.
         &nbsp;·&nbsp; Ends: <strong>${fmtD(addDays(liveDate,2))}</strong>
       </div>
       <div class="date-row">
@@ -1027,9 +1027,9 @@ function applyLiveDate(v){
   const parts = v.split('-');
   const d = new Date(+parts[0], +parts[1]-1, +parts[2]);
   const dow = d.getDay(); // 0=Sun,1=Mon,2=Tue,3=Wed,4=Thu,5=Fri,6=Sat
-  if(dow !== 1 && dow !== 2 && dow !== 3){
+  if(dow !== 0 && dow !== 1 && dow !== 2 && dow !== 3){
     // Invalid — show error, do NOT change the date
-    liveDateError = 'The event must start on a Monday, Tuesday, or Wednesday so all 3 days fall on workdays. Please choose a different date.';
+    liveDateError = 'The event must start on a Sunday, Monday, Tuesday, or Wednesday so all 3 days fall on workdays. Please choose a different date.';
     renderView();
     return;
   }
