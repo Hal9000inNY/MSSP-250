@@ -292,7 +292,7 @@
   <div class="header">
     <div>
       <div class="header-title">MSSP Top 250 — 2026 Project Manager</div>
-      <div class="header-sub" id="header-sub">CyberRisk Alliance · Live Event: Nov 15–17 · Webinar: Oct 6 · 46 tasks</div>
+      <div class="header-sub" id="header-sub">CyberRisk Alliance · Live Event: Nov 15–17 · Webinar: Oct 27 · 46 tasks</div>
       <div id="version-stamp" style="font-size:10px;color:#aaa;margin-top:2px"></div>
     </div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
@@ -323,7 +323,7 @@ const FILE_VERSION = 'Updated Mar 24, 2026';
 
 const TODAY     = new Date('2026-03-13');
 const ORIG_LIVE = '2026-11-15';
-const ORIG_WEB  = '2026-10-06';
+const ORIG_WEB  = '2026-10-27';
 
 const HOLIDAYS = {
   '2026-01-01':"New Year's Day",'2026-01-19':'MLK Jr. Day','2026-02-16':"Presidents' Day",
@@ -358,30 +358,30 @@ PHASE_ORDER.forEach((p,i) => PP[p] = PHASE_ORDER.length - i);
 const TASK_DEF = [
   {id:1, ph:'Strategy & Planning',task:'Internal strategy kickoff calls',owner:'Dana Jackson + CRA',so:null,eo:null,fixS:null,fixE:'2026-03-10',status:'Completed',firm:false,notes:'2/25 and 3/11 kickoff sessions'},
   {id:2, ph:'Strategy & Planning',task:'Develop process and schedule (this doc)',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-03-12',fixE:'2026-03-13',status:'Completed',firm:false,notes:''},
-  {id:3, ph:'Survey Design & Update',task:'Draft survey questions from Suparna; update questionnaire doc',owner:'CRA',so:null,eo:null,fixS:'2026-03-18',fixE:'2026-03-19',status:'Not Started',firm:false,notes:'Incorporate questions from Suparna per strategy doc'},
-  {id:4, ph:'Survey Design & Update',task:'Internal review of new questions',owner:'Dana Jackson + CRA',so:null,eo:null,fixS:'2026-03-20',fixE:'2026-03-20',status:'Not Started',firm:false,notes:''},
-  {id:5, ph:'Survey Design & Update',task:'Incorporate feedback; finalize survey draft',owner:'CRA',so:null,eo:null,fixS:'2026-03-23',fixE:'2026-03-24',status:'Not Started',firm:false,notes:''},
-  {id:6, ph:'Contact & Outreach Prep',task:'Compile list of prior Top 250 contacts',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-03-20',fixE:'2026-03-27',status:'Not Started',firm:false,notes:''},
-  {id:7, ph:'Contact & Outreach Prep',task:'Contact vendors for MSSP nominee referrals',owner:'CRA',so:null,eo:null,fixS:'2026-03-20',fixE:'2026-05-29',status:'Not Started',firm:false,notes:''},
-  {id:8, ph:'Contact & Outreach Prep',task:'Identify additional MSSP contact lists; provide to Dana for Qualtrics',owner:'CRA',so:null,eo:null,fixS:'2026-03-20',fixE:'2026-05-29',status:'Not Started',firm:false,notes:''},
-  {id:9, ph:'Contact & Outreach Prep',task:'Draft and review survey invitation/outreach emails',owner:'Dana Jackson + CRA',so:null,eo:null,fixS:'2026-03-23',fixE:'2026-03-23',status:'Not Started',firm:false,notes:''},
-  {id:10,ph:'Survey Programming & Testing',task:'Program and test survey; configure automated emails',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-03-25',fixE:'2026-03-26',status:'Not Started',firm:false,notes:''},
-  {id:11,ph:'Survey Programming & Testing',task:'Stakeholder review and approval of programmed survey and outreach',owner:'Dana Jackson + CRA',so:null,eo:null,fixS:'2026-03-27',fixE:'2026-03-30',status:'Not Started',firm:false,notes:''},
-  {id:12,ph:'Survey Programming & Testing',task:'Final edits and re-test after approval',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-03-31',fixE:'2026-03-31',status:'Not Started',firm:false,notes:''},
-  {id:13,ph:'Survey Fielding',task:'Provide public survey link to CRA with UTM setup',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-04-01',fixE:'2026-04-01',status:'Not Started',firm:false,notes:''},
-  {id:14,ph:'Survey Fielding',task:'Soft launch survey to small segment',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-04-01',fixE:'2026-04-03',status:'Not Started',firm:true,notes:'FIRM DATE'},
-  {id:15,ph:'Survey Fielding',task:'Full launch survey to remaining MSSP list',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-04-06',fixE:'2026-07-31',status:'Not Started',firm:false,notes:''},
-  {id:16,ph:'Survey Fielding',task:'Monitor response rates and data quality (ongoing)',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-04-01',fixE:'2026-07-31',status:'Not Started',firm:false,notes:''},
-  {id:17,ph:'Survey Fielding',task:'Send reminder emails to non-respondents',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-04-30',fixE:'2026-06-15',status:'Not Started',firm:false,notes:''},
-  {id:18,ph:'Survey Fielding',task:'Vendor outreach reminder for nominee referrals',owner:'CRA',so:null,eo:null,fixS:'2026-04-06',fixE:'2026-06-15',status:'Not Started',firm:false,notes:''},
-  {id:19,ph:'Survey Fielding',task:'Identify and recruit judges for essay-reviewed awards',owner:'CRA',so:null,eo:null,fixS:'2026-04-06',fixE:'2026-04-17',status:'Not Started',firm:false,notes:''},
-  {id:20,ph:'Survey Fielding',task:'Close survey / final field date',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-07-31',fixE:'2026-07-31',status:'Not Started',firm:true,notes:'FIRM DATE'},
-  {id:21,ph:'Data Processing',task:'Data quality review and cleaning (ongoing)',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-04-01',fixE:'2026-08-03',status:'Not Started',firm:false,notes:''},
-  {id:22,ph:'Data Processing',task:'Apply scoring/ranking methodology to generate Top 250',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-08-04',fixE:'2026-08-07',status:'Not Started',firm:false,notes:''},
-  {id:23,ph:'Data Processing',task:'Generate Revenue Segmentation View (weight-class sub-lists)',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-08-03',fixE:'2026-08-18',status:'Not Started',firm:false,notes:''},
-  {id:24,ph:'Data Processing',task:'Generate shortlists for all 5 new award categories',owner:'Dana Jackson + CRA',so:null,eo:null,fixS:'2026-08-19',fixE:'2026-08-28',status:'Not Started',firm:false,notes:''},
-  {id:25,ph:'Data Processing',task:'Judge review of essay responses',owner:'CRA + Judges',so:null,eo:null,fixS:'2026-08-31',fixE:'2026-09-10',status:'Not Started',firm:false,notes:'Most Innovative & Best Emerging awards'},
-  {id:26,ph:'Data Processing',task:'Finalize all award lists; internal stakeholder review',owner:'Dana Jackson + CRA',so:null,eo:null,fixS:'2026-09-11',fixE:'2026-09-21',status:'Not Started',firm:false,notes:''},
+  {id:3, ph:'Survey Design & Update',task:'Draft survey questions from Suparna; update questionnaire doc',owner:'CRA',so:null,eo:null,fixS:'2026-04-08',fixE:'2026-04-09',status:'Not Started',firm:false,notes:'Incorporate questions from Suparna per strategy doc'},
+  {id:4, ph:'Survey Design & Update',task:'Internal review of new questions',owner:'Dana Jackson + CRA',so:null,eo:null,fixS:'2026-04-10',fixE:'2026-04-10',status:'Not Started',firm:false,notes:''},
+  {id:5, ph:'Survey Design & Update',task:'Incorporate feedback; finalize survey draft',owner:'CRA',so:null,eo:null,fixS:'2026-04-13',fixE:'2026-04-14',status:'Not Started',firm:false,notes:''},
+  {id:6, ph:'Contact & Outreach Prep',task:'Compile list of prior Top 250 contacts',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-04-10',fixE:'2026-04-17',status:'Not Started',firm:false,notes:''},
+  {id:7, ph:'Contact & Outreach Prep',task:'Contact vendors for MSSP nominee referrals',owner:'CRA',so:null,eo:null,fixS:'2026-04-10',fixE:'2026-06-19',status:'Not Started',firm:false,notes:''},
+  {id:8, ph:'Contact & Outreach Prep',task:'Identify additional MSSP contact lists; provide to Dana for Qualtrics',owner:'CRA',so:null,eo:null,fixS:'2026-04-10',fixE:'2026-06-19',status:'Not Started',firm:false,notes:''},
+  {id:9, ph:'Contact & Outreach Prep',task:'Draft and review survey invitation/outreach emails',owner:'Dana Jackson + CRA',so:null,eo:null,fixS:'2026-04-13',fixE:'2026-04-13',status:'Not Started',firm:false,notes:''},
+  {id:10,ph:'Survey Programming & Testing',task:'Program and test survey; configure automated emails',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-04-15',fixE:'2026-04-16',status:'Not Started',firm:false,notes:''},
+  {id:11,ph:'Survey Programming & Testing',task:'Stakeholder review and approval of programmed survey and outreach',owner:'Dana Jackson + CRA',so:null,eo:null,fixS:'2026-04-17',fixE:'2026-04-20',status:'Not Started',firm:false,notes:''},
+  {id:12,ph:'Survey Programming & Testing',task:'Final edits and re-test after approval',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-04-21',fixE:'2026-04-21',status:'Not Started',firm:false,notes:''},
+  {id:13,ph:'Survey Fielding',task:'Provide public survey link to CRA with UTM setup',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-04-22',fixE:'2026-04-22',status:'Not Started',firm:false,notes:''},
+  {id:14,ph:'Survey Fielding',task:'Soft launch survey to small segment',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-04-22',fixE:'2026-04-24',status:'Not Started',firm:true,notes:'FIRM DATE'},
+  {id:15,ph:'Survey Fielding',task:'Full launch survey to remaining MSSP list',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-04-27',fixE:'2026-08-21',status:'Not Started',firm:false,notes:''},
+  {id:16,ph:'Survey Fielding',task:'Monitor response rates and data quality (ongoing)',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-04-22',fixE:'2026-08-21',status:'Not Started',firm:false,notes:''},
+  {id:17,ph:'Survey Fielding',task:'Send reminder emails to non-respondents',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-05-21',fixE:'2026-07-06',status:'Not Started',firm:false,notes:''},
+  {id:18,ph:'Survey Fielding',task:'Vendor outreach reminder for nominee referrals',owner:'CRA',so:null,eo:null,fixS:'2026-04-27',fixE:'2026-07-06',status:'Not Started',firm:false,notes:''},
+  {id:19,ph:'Survey Fielding',task:'Identify and recruit judges for essay-reviewed awards',owner:'CRA',so:null,eo:null,fixS:'2026-04-27',fixE:'2026-05-08',status:'Not Started',firm:false,notes:''},
+  {id:20,ph:'Survey Fielding',task:'Close survey / final field date',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-08-21',fixE:'2026-08-21',status:'Not Started',firm:true,notes:'FIRM DATE'},
+  {id:21,ph:'Data Processing',task:'Data quality review and cleaning (ongoing)',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-04-22',fixE:'2026-08-24',status:'Not Started',firm:false,notes:''},
+  {id:22,ph:'Data Processing',task:'Apply scoring/ranking methodology to generate Top 250',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-08-25',fixE:'2026-08-28',status:'Not Started',firm:false,notes:''},
+  {id:23,ph:'Data Processing',task:'Generate Revenue Segmentation View (weight-class sub-lists)',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-08-24',fixE:'2026-09-08',status:'Not Started',firm:false,notes:''},
+  {id:24,ph:'Data Processing',task:'Generate shortlists for all 5 new award categories',owner:'Dana Jackson + CRA',so:null,eo:null,fixS:'2026-09-09',fixE:'2026-09-18',status:'Not Started',firm:false,notes:''},
+  {id:25,ph:'Data Processing',task:'Judge review of essay responses',owner:'CRA + Judges',so:null,eo:null,fixS:'2026-09-21',fixE:'2026-10-01',status:'Not Started',firm:false,notes:'Most Innovative & Best Emerging awards'},
+  {id:26,ph:'Data Processing',task:'Finalize all award lists; internal stakeholder review',owner:'Dana Jackson + CRA',so:null,eo:null,fixS:'2026-10-02',fixE:'2026-10-12',status:'Not Started',firm:false,notes:''},
   {id:27,ph:'Results & Reporting',task:'Develop data presentation deck (trends, insights, benchmarks)',owner:'Dana Jackson',anchor:'live',so:-35,eo:-32,fixS:null,fixE:null,status:'Not Started',firm:false,notes:'Winner rankings embargoed until live event'},
   {id:28,ph:'Results & Reporting',task:'Review data presentation with stakeholders',owner:'Dana Jackson + CRA',anchor:'live',so:-29,eo:-22,fixS:null,fixE:null,status:'Not Started',firm:false,notes:''},
   {id:29,ph:'Results & Reporting',task:'Develop report charts (4-8 key charts for website/content)',owner:'Dana Jackson',anchor:'live',so:-21,eo:-11,fixS:null,fixE:null,status:'Not Started',firm:false,notes:''},
@@ -400,8 +400,8 @@ const TASK_DEF = [
   {id:42,ph:'Post-Event',task:'Publish full results on MSSPAlert.com',owner:'Dana Jackson + CRA',anchor:'live',so:6,eo:7,fixS:null,fixE:null,status:'Not Started',firm:false,notes:''},
   {id:43,ph:'Post-Event',task:'Publish post-event recap and content',owner:'CRA',anchor:'live',so:6,eo:10,fixS:null,fixE:null,status:'Not Started',firm:false,notes:''},
   {id:44,ph:'Post-Event',task:'Post-event debrief and 2026 learnings document',owner:'CRA',anchor:'live',so:13,eo:17,fixS:null,fixE:null,status:'Not Started',firm:false,notes:''},
-  {id:45,ph:'Panel/Community',task:'Define MSSP Panel/Advisory Council structure and member benefits',owner:'Dana Jackson + CRA',so:null,eo:null,fixS:'2026-04-01',fixE:'2026-04-06',status:'Not Started',firm:false,notes:''},
-  {id:46,ph:'Panel/Community',task:'Launch Panel signup (concurrent with survey launch)',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-04-02',fixE:'2026-07-31',status:'Not Started',firm:false,notes:''}
+  {id:45,ph:'Panel/Community',task:'Define MSSP Panel/Advisory Council structure and member benefits',owner:'Dana Jackson + CRA',so:null,eo:null,fixS:'2026-04-22',fixE:'2026-04-27',status:'Not Started',firm:false,notes:''},
+  {id:46,ph:'Panel/Community',task:'Launch Panel signup (concurrent with survey launch)',owner:'Dana Jackson',so:null,eo:null,fixS:'2026-04-23',fixE:'2026-08-21',status:'Not Started',firm:false,notes:''}
 ];
 
 /* ── App State ── */
