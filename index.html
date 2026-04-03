@@ -855,14 +855,14 @@ function renderNotify(){
       <div class="section-title" style="margin-bottom:6px">Your email address</div>
       <div style="font-size:12px;color:#666;margin-bottom:12px">Enter your email to generate personalized reminders. Reminders are sent via <strong>your own email client</strong> — nothing is sent automatically.</div>
       <div class="email-field">
-        <input class="email-input ${notif.email?(emailOk?'valid':'invalid'):''}" type="email" placeholder="you@company.com" value="${notif.email}"
-          oninput="notif.email=this.value;notif.saved=false;renderNotifPreview()">
-        <button class="primary-btn" onclick="saveEmail()" ${!emailOk?'disabled':''}>
+        <input class="email-input ${notif.email?(emailOk?'valid':'invalid'):''}" type="email" id="notif-email-input" placeholder="you@company.com" value="${notif.email}"
+          oninput="notif.email=this.value;notif.saved=false;this.className='email-input '+(this.value?(isValidEmail(this.value)?'valid':'invalid'):'');document.getElementById('notif-save-btn').disabled=!isValidEmail(this.value);">
+        <button class="primary-btn" id="notif-save-btn" onclick="saveEmail()" ${!emailOk?'disabled':''}>
           <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M13 4L6 11l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           ${notif.saved?'Saved ✓':'Save email'}
         </button>
       </div>
-      ${notif.saved?`<div style="margin-top:8px"><span class="saved-chip"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M13 4L6 11l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Configured for ${notif.email}</span></div>`:''}
+      ${notif.saved?`<div id="notif-saved-chip" style="margin-top:8px"><span class="saved-chip"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M13 4L6 11l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Configured for ${notif.email}</span></div>`:`<div id="notif-saved-chip" style="margin-top:8px"></div>`}
     </div>
     <div class="notif-section">
       <div class="section-title">When to send reminders</div>
@@ -1041,7 +1041,14 @@ function applyLiveDate(v){
 function clearLiveDateError(){ liveDateError=''; renderView(); }
 function applyWebDate(v){if(!v)return;webDate=v;updateHeader();renderView();}
 function discardPreview(){liveDate=officialLive;webDate=officialWeb;updateHeader();renderView();showToast('Preview discarded — showing official dates');}
-function saveEmail(){if(isValidEmail(notif.email)){notif.saved=true;renderView();showToast('Email saved for '+notif.email);}}
+function saveEmail(){
+  if(isValidEmail(notif.email)){
+    notif.saved=true;
+    const chip=document.getElementById('notif-saved-chip');
+    if(chip)chip.innerHTML=`<span class="saved-chip">✓ Configured for ${notif.email}</span>`;
+    showToast('Email saved for '+notif.email);
+  }
+}
 function toggleRemindDay(d){const i=notif.remindDays.indexOf(d);if(i>-1)notif.remindDays.splice(i,1);else notif.remindDays.push(d);renderNotifPreview();document.querySelectorAll('.day-chip').forEach(el=>{const v=parseInt(el.textContent);el.classList.toggle('selected',notif.remindDays.includes(v));});}
 function togglePhase(ph){if(notif.enabledPhases.has(ph))notif.enabledPhases.delete(ph);else notif.enabledPhases.add(ph);renderNotifPreview();}
 function resetAll(){
